@@ -1,0 +1,1230 @@
+<title>Guild Petualang</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Concept: a guildhall at dusk. Harbor-blue surfaces, lantern gold for progress and the primary action,
+   jade for remote and safe states, ember for warnings. One dark look on purpose (an RPG world, not a document). */
+:root{
+  --night:#070D12; --ink-900:#0E1A24; --ink-800:#142431; --ink-700:#1C3243;
+  --line:#28425A; --line-soft:#1D3345;
+  --mist:#E8EEF2; --mist-2:#A9BBC7; --mist-3:#7B909F;
+  --lantern:#F0B14A; --lantern-hi:#F8CF7E; --lantern-lo:#C98A21;
+  --jade:#56C3A8; --ember:#EA6A57; --sky:#8FB0FF;
+  --font-display:'Cinzel',Georgia,serif;
+  --font-body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;padding-block:16px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:radial-gradient(900px 520px at 78% -8%,#173a4a66,transparent 70%),radial-gradient(700px 480px at 4% 108%,#3a2a1033,transparent 70%),var(--night);
+  color:var(--mist);font:400 14px/1.5 var(--font-body);min-height:100dvh;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+button:focus-visible,input:focus-visible{outline:2px solid var(--lantern-hi);outline-offset:2px}
+h1,h2,h3,p{margin:0}
+.disp{font-family:var(--font-display);letter-spacing:.02em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- stage ---------- */
+.stage{display:grid;grid-template-columns:minmax(260px,330px) 390px;gap:56px;justify-content:center;align-items:center;min-height:calc(100dvh - 32px)}
+@media (max-width:860px){.stage{grid-template-columns:minmax(0,390px)}.stage .brief{display:none}}
+.brief{display:flex;flex-direction:column;gap:22px}
+.brief .logo{display:flex;align-items:center;gap:14px;color:var(--lantern)}
+.brief .logo svg{width:46px;height:46px;flex:none}
+.brief h1{font:700 26px/1.1 var(--font-display);color:var(--mist);letter-spacing:.04em}
+.brief .ver{font-size:12px;color:var(--mist-3);margin-top:4px}
+.brief .card{padding:16px 18px;border:1px solid var(--line-soft);border-radius:14px;background:#0c1721cc}
+.brief .eyebrow{font:600 11px/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--lantern);margin-bottom:10px;display:block}
+.brief p{color:var(--mist-2);font-size:14px}
+.brief .row{display:flex;gap:10px;flex-wrap:wrap}
+.pill-btn{padding:9px 14px;border-radius:999px;border:1px solid var(--line);color:var(--mist);font-weight:600;font-size:13px;background:#0e1a24}
+.pill-btn:hover{border-color:var(--lantern-lo);color:var(--lantern-hi)}
+.brief small{color:var(--mist-3);font-size:12px;line-height:1.5}
+
+.phone{position:relative;width:100%;max-width:390px;height:min(844px,calc(100dvh - 32px));min-height:560px;border-radius:36px;overflow:hidden;background:var(--ink-900);isolation:isolate;
+  box-shadow:0 0 0 1px #2c455c,0 0 0 8px #0a1218,0 0 0 9px #1b2c3a,0 40px 90px -30px #000}
+@media (max-width:480px){.phone{border-radius:28px}}
+
+/* ---------- cut-corner surface ---------- */
+.cut{--c:10px;--edge:var(--line);--fill:var(--ink-800);position:relative;background:var(--edge);
+  clip-path:polygon(var(--c) 0,calc(100% - var(--c)) 0,100% var(--c),100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,var(--c) 100%,0 calc(100% - var(--c)),0 var(--c))}
+.cut::before{content:"";position:absolute;inset:1px;z-index:0;background:var(--fill);
+  clip-path:polygon(calc(var(--c) - 1px) 0,calc(100% - var(--c) + 1px) 0,100% calc(var(--c) - 1px),100% calc(100% - var(--c) + 1px),calc(100% - var(--c) + 1px) 100%,calc(var(--c) - 1px) 100%,0 calc(100% - var(--c) + 1px),0 calc(var(--c) - 1px))}
+.cut>*{position:relative;z-index:1}
+button.cut:focus-visible{--edge:var(--lantern-hi);outline:none}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;padding:0 20px;font-weight:800;font-size:15px;letter-spacing:.02em;color:#2a1a00;
+  background:linear-gradient(#F8CF7E,#E7A236 70%,#D58E1E);
+  clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);
+  box-shadow:inset 0 1px 0 #fff8;transition:transform .12s,filter .12s}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:translateY(1px) scale(.995);filter:brightness(.94)}
+.btn[disabled]{background:#26394a;color:#7d93a4;cursor:not-allowed;filter:none;transform:none;box-shadow:none}
+.btn.ghost{background:#1b3040;color:var(--mist);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.ghost:hover{background:#21394c}
+
+/* ---------- screens ---------- */
+.app{position:absolute;inset:0;overflow:hidden}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;background:var(--ink-900)}
+.screen::-webkit-scrollbar{display:none}
+.screen.enter{animation:rise .42s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.pad{padding:26px 18px 112px}
+
+.scr-title{font:700 26px/1.1 var(--font-display);letter-spacing:.03em}
+.rule{display:flex;align-items:center;gap:10px;margin:14px 0 4px;color:var(--lantern-lo)}
+.rule::before,.rule::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line))}
+.rule::after{background:linear-gradient(90deg,var(--line),transparent)}
+.rule i{width:7px;height:7px;background:currentColor;transform:rotate(45deg)}
+.label{font:700 11px/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--mist-3)}
+.h-sec{display:flex;align-items:center;gap:10px;margin:26px 0 12px;font:700 15px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--mist)}
+.h-sec i{width:7px;height:7px;background:var(--lantern);transform:rotate(45deg);flex:none}
+
+/* ---------- HOME / hall ---------- */
+.hall{background:#0c1822}
+.scene{position:absolute;inset:0;transform-origin:50% 42%;transition:transform 2.7s cubic-bezier(.2,.7,.2,1)}
+.scene.prezoom{transform:scale(1.16)}
+.wall{position:absolute;inset:0;background:
+  radial-gradient(70% 46% at 50% 30%,rgba(240,177,74,.2),transparent 72%),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0 1px,transparent 1px 38px),
+  linear-gradient(#0b1721,#102230 58%,#0a141d)}
+.window{position:absolute;top:38px;left:50%;width:310px;transform:translateX(-50%)}
+.banner{position:absolute;top:-6px;width:46px;height:176px;color:var(--lantern);display:flex;align-items:flex-start;justify-content:center;padding-top:34px;
+  background:linear-gradient(#1b5a5e,#12393f);clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%);box-shadow:inset 0 0 0 2px #0b222a}
+.banner::before{content:"";position:absolute;inset:6px 6px auto;height:2px;background:var(--lantern-lo)}
+.banner svg{width:30px;height:30px}
+.banner.l{left:12px}.banner.r{right:12px}
+.lantern{position:absolute;top:150px;width:18px;height:26px;border-radius:5px 5px 9px 9px;background:linear-gradient(#ffe7b0,#f0b14a);
+  box-shadow:0 0 28px 12px rgba(240,177,74,.38),0 0 70px 30px rgba(240,177,74,.16);transform-origin:50% -26px;animation:sway 5.5s ease-in-out infinite}
+.lantern::before{content:"";position:absolute;left:8px;top:-26px;width:2px;height:26px;background:#5a4a2a}
+.lantern.l{left:66px}.lantern.r{right:66px;animation-delay:-2.6s}
+@keyframes sway{0%,100%{transform:rotate(2.5deg)}50%{transform:rotate(-2.5deg)}}
+
+.terra-box{position:absolute;left:36px;right:36px;top:46px;bottom:calc(clamp(250px,36%,320px) - 38px);z-index:2}
+.terra{width:100%;height:100%;display:block;overflow:visible}
+.terra .x,.terra .eyes-happy,.terra .mouth-happy,.terra .mouth-calm,.terra .mouth-talk{display:none}
+.terra[data-g="f"] .m,.terra[data-g="m"] .f{display:none}
+.terra[data-e="happy"] .eyes-open{display:none}
+.terra[data-e="happy"] .eyes-happy{display:inline}
+.terra[data-e="smile"] .mouth-smile,.terra[data-e="happy"] .mouth-happy,.terra[data-e="calm"] .mouth-calm{display:inline}
+.terra[data-e="smile"] .mouth-smile{display:inline}
+.terra[data-e="happy"] .mouth-smile,.terra[data-e="calm"] .mouth-smile{display:none}
+.terra[data-e="calm"] .brows{transform:translateY(1.6px)}
+.terra.talking .mouth-smile,.terra.talking .mouth-happy,.terra.talking .mouth-calm{display:none}
+.terra.talking .mouth-talk{display:inline}
+.terra .bob{animation:bob 5.2s ease-in-out infinite}
+.terra .sway{transform-origin:130px 96px;animation:hair 6.4s ease-in-out infinite}
+.terra .blink{transform-box:fill-box;transform-origin:50% 50%;animation:blink 5.4s infinite}
+.terra .talkp{transform-box:fill-box;transform-origin:50% 0;animation:talk .34s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes hair{0%,100%{transform:rotate(.7deg)}50%{transform:rotate(-.7deg)}}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+@keyframes talk{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+
+.counter{position:absolute;left:0;right:0;bottom:0;height:clamp(250px,36%,320px);z-index:3;background:linear-gradient(#16293a,#0c1823);border-top:2px solid var(--lantern-lo);box-shadow:0 -16px 36px -10px rgba(0,0,0,.7),inset 0 1px 0 #ffffff1f}
+.counter::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 62px,rgba(240,177,74,.07) 62px 63px)}
+.prop{position:absolute;bottom:calc(100% - 1px);z-index:1}
+.prop.ledger{left:22px;width:78px}.prop.bell{right:26px;width:42px}
+
+.ui-top{position:absolute;top:14px;left:14px;right:14px;z-index:8;display:flex;justify-content:flex-end;align-items:center;gap:8px}
+.gender{display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:#0a141dcc;border:1px solid var(--line);backdrop-filter:blur(8px)}
+.gender button{padding:6px 11px;border-radius:999px;font-weight:600;font-size:11.5px;color:var(--mist-2)}
+.gender button[aria-pressed="true"]{background:var(--lantern);color:#2a1a00}
+.gender-cap{font:700 11px var(--font-display);letter-spacing:.08em;color:var(--lantern);padding:0 6px 0 10px}
+
+.dlg{position:absolute;left:14px;right:14px;bottom:90px;z-index:6;display:flex;flex-direction:column;gap:8px}
+.dlg-box{--c:12px;--edge:rgba(240,177,74,.7);--fill:#0c1822;width:100%;padding:22px 18px 16px;text-align:left;min-height:94px}
+.dlg-wrap{position:relative;padding-top:10px}
+.dlg-wrap .plate{position:absolute;z-index:2;left:12px;top:0;padding:4px 14px 5px;font:700 13px/1 var(--font-display);letter-spacing:.1em;color:#2a1a00;
+  background:linear-gradient(#F8CF7E,#E0982B);clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%)}
+.dlg-text{font-size:15px;line-height:1.55;color:var(--mist);min-height:46px}
+.dlg-next{position:absolute;right:14px;bottom:10px;width:10px;height:10px;background:var(--lantern);transform:rotate(45deg);opacity:0;animation:nudge 1.1s ease-in-out infinite}
+.dlg-next.on{opacity:1}
+@keyframes nudge{0%,100%{translate:0 0}50%{translate:0 3px}}
+.dlg-skip{position:absolute;right:12px;top:6px;z-index:2;padding:4px 8px;font-size:11.5px;font-weight:700;color:var(--mist-3);letter-spacing:.04em}
+.dlg-skip:hover{color:var(--lantern-hi)}
+.choices{display:flex;flex-direction:column;gap:7px}
+.choice{--c:9px;--edge:var(--line);--fill:#15293a;width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;font-weight:600;font-size:14px;animation:pop .32s both cubic-bezier(.2,.8,.2,1)}
+.choice:nth-child(2){animation-delay:.06s}.choice:nth-child(3){animation-delay:.12s}
+.choice .dia{width:8px;height:8px;background:var(--lantern);transform:rotate(45deg);flex:none;transition:box-shadow .15s}
+.choice:hover{--fill:#1d3a4f;--edge:var(--lantern-lo)}
+.choice:hover .dia{box-shadow:0 0 10px var(--lantern)}
+.choice.main{--fill:#2a2412;--edge:var(--lantern)}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- doors ---------- */
+.doors{position:absolute;inset:0;z-index:60;perspective:1200px;overflow:hidden}
+.doors.gone{display:none}
+.leaf{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;backface-visibility:hidden;transition:transform 1.9s cubic-bezier(.65,.02,.25,1) .5s;
+  background:linear-gradient(90deg,rgba(0,0,0,.4),transparent 14%,transparent 86%,rgba(0,0,0,.4)),repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 46px),linear-gradient(#143846,#0f2a36 60%,#0a1d27)}
+.leaf.l{left:0;transform-origin:0 50%}
+.leaf.r{right:0;transform-origin:100% 50%}
+.leaf::before{content:"";position:absolute;inset:28px 16px 120px;border:1px solid rgba(240,177,74,.42)}
+.leaf.l::before{border-radius:170px 0 0 0}.leaf.r::before{border-radius:0 170px 0 0}
+.leaf::after{content:"";position:absolute;left:0;right:0;bottom:72px;height:16px;
+  background:radial-gradient(circle,#F8CF7E 0 2.6px,transparent 3.2px) 0 50%/36px 16px repeat-x,linear-gradient(#5b4116,#3a2a0c)}
+.crest-big{position:absolute;top:calc(50% - 96px);width:192px;height:192px;color:var(--lantern);filter:drop-shadow(0 0 14px rgba(240,177,74,.5))}
+.leaf.l .crest-big{right:-96px}.leaf.r .crest-big{left:-96px}
+.doors.open .leaf.l{transform:rotateY(-98deg)}
+.doors.open .leaf.r{transform:rotateY(98deg)}
+.flare{position:absolute;inset:0;opacity:0;background:radial-gradient(62% 46% at 50% 50%,#ffe9bd 0%,#f0b14a 30%,rgba(240,177,74,0) 72%)}
+.doors.open .flare{animation:flare 2.6s .5s both}
+@keyframes flare{0%{opacity:0}35%{opacity:.95}100%{opacity:0}}
+.skip-intro{position:absolute;right:16px;bottom:18px;z-index:3;padding:8px 12px;font-size:12px;font-weight:700;color:var(--mist-2);letter-spacing:.04em;border-radius:999px;background:#0a141dcc;border:1px solid var(--line)}
+
+/* ---------- dock ---------- */
+.dock{position:absolute;left:14px;right:14px;bottom:14px;height:64px;z-index:20;display:grid;grid-template-columns:repeat(3,1fr);border-radius:22px;
+  background:rgba(9,18,26,.92);backdrop-filter:blur(12px);border:1px solid var(--line);box-shadow:0 10px 30px -8px #000}
+.dock.hide{display:none}
+.dock button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--mist-3);font-size:11px;font-weight:700;letter-spacing:.03em;transition:color .15s}
+.dock button svg{width:23px;height:23px}
+.dock button[aria-current="page"]{color:var(--lantern-hi)}
+.dock button[aria-current="page"]::before{content:"";position:absolute;top:-4px;left:50%;width:9px;height:9px;margin-left:-4.5px;background:var(--lantern);transform:rotate(45deg);box-shadow:0 0 14px var(--lantern)}
+
+/* ---------- board ---------- */
+.sub{display:flex;align-items:center;gap:6px;color:var(--mist-2);font-size:13px;margin-top:8px}
+.sub svg{width:15px;height:15px;color:var(--lantern)}
+.sub em{font-style:normal;color:var(--mist-3);font-size:12px;margin-left:4px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:18px;padding:3px;border-radius:14px;background:#0a141d;border:1px solid var(--line-soft)}
+.tabs button{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:11px;font-weight:700;font-size:13.5px;color:var(--mist-2)}
+.tabs button svg{width:17px;height:17px}
+.tabs button[aria-selected="true"]{background:linear-gradient(#24465c,#1b3548);color:var(--mist);box-shadow:inset 0 0 0 1px #3d6682}
+.tabs .cnt{font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;background:#0a141d;color:var(--lantern-hi)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:14px -18px 0;padding:0 18px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:7px 13px;border-radius:999px;border:1px solid var(--line);font-weight:600;font-size:12.5px;color:var(--mist-2);background:#0e1a24}
+.chip[aria-pressed="true"]{border-color:var(--lantern);color:var(--lantern-hi);background:#2a2412}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:var(--mist-2)}
+.switch-row b{color:var(--mist);font-weight:700}
+.sw{position:relative;flex:none;width:44px;height:26px;border-radius:99px;background:#223648;transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#9db0be;transition:transform .18s,background .18s}
+.sw[aria-checked="true"]{background:#7a5a1c}
+.sw[aria-checked="true"]::after{transform:translateX(18px);background:var(--lantern-hi)}
+.active-banner{--c:10px;--edge:var(--jade);--fill:#0f2a2b;width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;margin-top:14px}
+.active-banner svg{width:20px;height:20px;color:var(--jade);flex:none}
+.active-banner span{font-size:13px;color:var(--mist)}
+.active-banner small{display:block;color:var(--mist-2);font-size:12px}
+
+.list{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.qcard{--c:12px;--edge:var(--line-soft);--fill:#132532;width:100%;display:grid;grid-template-columns:50px minmax(0,1fr);gap:12px;padding:14px;text-align:left;transition:transform .15s}
+.qcard:hover{--edge:#3b5d77}
+.qcard:active{transform:scale(.992)}
+.qcard.locked{--fill:#0f1c27}
+.qcard.locked .q-title,.qcard.locked .seal{opacity:.62}
+.qcard .seal{display:block;filter:drop-shadow(0 4px 8px #0008)}
+.q-title{font-weight:700;font-size:15px;line-height:1.3;color:var(--mist);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:7px;font-size:12px;color:var(--mist-2)}
+.tag{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:11px;letter-spacing:.04em;padding:2px 8px;border-radius:5px;background:#0b1620;border:1px solid var(--line)}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--dot,var(--mist-3))}
+.tag[data-t="Warga"]{--dot:var(--jade)}.tag[data-t="UMKM"]{--dot:var(--lantern)}.tag[data-t="Pemerintah"]{--dot:var(--sky)}
+.where{display:inline-flex;align-items:center;gap:4px}
+.where svg{width:13px;height:13px}
+.q-foot{display:flex;align-items:center;gap:12px;margin-top:11px;flex-wrap:wrap}
+.reward{font-weight:800;font-size:16px;color:var(--lantern-hi)}
+.exp{display:inline-flex;align-items:center;gap:4px;font-weight:700;font-size:12.5px;color:var(--jade)}
+.exp svg{width:13px;height:13px}
+.left{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--mist-2)}
+.left svg{width:13px;height:13px}
+.req{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.req span{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:99px;background:#0b1620;color:var(--mist-2);border:1px solid var(--line-soft)}
+.req span svg{width:12px;height:12px}
+.req .ok{color:var(--jade);border-color:#245a50}
+.req .no{color:#f19c8e;border-color:#6b3a33;background:#1c1214}
+.empty{padding:34px 18px;text-align:center;color:var(--mist-2)}
+.empty b{display:block;color:var(--mist);margin-bottom:4px}
+
+/* ---------- detail ---------- */
+.d-top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:12px 14px 16px;background:linear-gradient(var(--ink-900) 78%,rgba(14,26,36,0))}
+.icon-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#15293a;border:1px solid var(--line);flex:none}
+.icon-btn svg{width:20px;height:20px}
+.icon-btn:hover{border-color:var(--lantern-lo)}
+.d-top .label{flex:1;text-align:center;padding-right:40px}
+.d-hero{display:grid;grid-template-columns:62px minmax(0,1fr);gap:14px;align-items:center}
+.d-hero h2{font:700 20px/1.25 var(--font-body);color:var(--mist)}
+.diff{font-size:12px;color:var(--mist-2);margin-top:6px}
+.reward-box{--c:14px;--edge:rgba(240,177,74,.55);--fill:#1b1a14;margin-top:20px;padding:16px 16px 14px}
+.reward-box .big{font:800 30px/1.1 var(--font-body);color:var(--lantern-hi)}
+.reward-box .lbl{font-size:12px;color:var(--mist-2);margin-bottom:6px}
+.split{display:grid;gap:7px;margin-top:12px;padding-top:12px;border-top:1px dashed #4a4026;font-size:13px}
+.split div{display:flex;justify-content:space-between;gap:12px;color:var(--mist-2)}
+.split div b{color:var(--mist);font-weight:700}
+.split div.take{color:var(--mist);font-weight:700}
+.split div.take b{color:var(--jade);font-size:15px}
+.escrow{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:11px 12px;border-radius:12px;background:#0f2a2b;border:1px solid #1f5a52;font-size:12.5px;color:#b9e6dc}
+.escrow svg{width:20px;height:20px;color:var(--jade);flex:none;margin-top:1px}
+.d-desc{color:var(--mist-2);font-size:14px;line-height:1.65}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact{padding:11px 12px;border-radius:12px;background:#10202c;border:1px solid var(--line-soft)}
+.fact .label{display:block;margin-bottom:6px}
+.fact b{font-size:14px;font-weight:700}
+.fact.wide{grid-column:1/-1}
+.reqlist{display:grid;gap:8px}
+.reqrow{display:flex;gap:10px;align-items:center;padding:11px 12px;border-radius:12px;background:#10202c;border:1px solid var(--line-soft);font-size:13.5px}
+.reqrow svg{width:19px;height:19px;flex:none}
+.reqrow.ok svg{color:var(--jade)}.reqrow.no svg{color:var(--ember)}
+.reqrow small{display:block;color:var(--mist-3);font-size:12px}
+.reqrow .st{margin-left:auto;font-size:12px;font-weight:700}
+.reqrow.ok .st{color:var(--jade)}.reqrow.no .st{color:#f19c8e}
+.stages{display:grid;gap:0;position:relative}
+.stage-row{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:start;padding:0 0 16px;position:relative}
+.stage-row::before{content:"";position:absolute;left:10px;top:20px;bottom:-2px;width:1px;background:var(--line)}
+.stage-row:last-child::before{display:none}
+.stage-row .dot{width:21px;height:21px;border-radius:50%;border:2px solid var(--lantern-lo);background:var(--ink-900);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--lantern-hi)}
+.stage-row b{font-weight:600;font-size:14px;display:block}
+.stage-row small{color:var(--mist-3);font-size:12px}
+.stage-row .amt{font-weight:700;font-size:14px;color:var(--lantern-hi);text-align:right}
+.rules{display:grid;gap:10px}
+.rule-row{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;font-size:13px;color:var(--mist-2)}
+.rule-row svg{width:18px;height:18px;color:var(--lantern);margin-top:1px}
+.rule-row b{color:var(--mist);font-weight:700}
+.giver{display:grid;grid-template-columns:46px minmax(0,1fr);gap:12px;align-items:center}
+.avatar{width:46px;height:46px;display:grid;place-items:center;font:700 18px var(--font-display);color:var(--lantern-hi);background:linear-gradient(#24465c,#16303f);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.giver b{font-size:15px}
+.giver small{display:block;color:var(--mist-2);font-size:12.5px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:99px;font-size:12px;font-weight:700;border:1px solid}
+.badge svg{width:13px;height:13px}
+.badge.good{color:#8fe3cd;border-color:#2b7567;background:#0e2a28}
+.badge.bad{color:#f4a597;border-color:#7a3d34;background:#2a1513}
+.badge small{font-weight:500;color:inherit;opacity:.8;margin-left:2px}
+.cta{position:sticky;bottom:0;z-index:6;padding:44px 16px 16px;background:linear-gradient(rgba(14,26,36,0),var(--ink-900) 30%)}
+.cta p{font-size:12px;color:var(--mist-2);text-align:center;margin-bottom:10px}
+
+/* ---------- profile ---------- */
+.seg{display:flex;gap:2px;padding:3px;margin-top:16px;border-radius:12px;background:#0a141d;border:1px solid var(--line-soft)}
+.seg button{flex:1;padding:8px;border-radius:9px;font-weight:700;font-size:12.5px;color:var(--mist-2);text-align:center}
+.seg button[aria-pressed="true"]{background:#24465c;color:var(--mist)}
+.pcard{--c:16px;--edge:rgba(240,177,74,.55);--fill:#132532;margin-top:18px;padding:18px}
+.pcard .top{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:center}
+.pcard h2{font:700 20px/1.15 var(--font-body)}
+.pcard .rk{font-size:13px;color:var(--mist-2);margin-top:3px}
+.pcard .ident{font-size:12px;color:var(--mist-3);margin-top:2px}
+.xp{margin-top:18px}
+.xp-row{display:flex;justify-content:space-between;font-size:12px;color:var(--mist-2);margin-bottom:7px}
+.xp-row b{color:var(--lantern-hi)}
+.bar{height:9px;border-radius:99px;background:#0a141d;box-shadow:inset 0 0 0 1px var(--line-soft);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--lantern-lo),var(--lantern-hi))}
+.bar.jade i{background:linear-gradient(90deg,#2c8f7a,var(--jade))}
+.stat{display:grid;grid-template-columns:118px 1fr 34px;gap:10px;align-items:center;font-size:13px;margin-bottom:11px}
+.stat span:first-child{color:var(--mist-2)}
+.stat b{text-align:right;font-weight:700}
+.stat.off b{color:var(--mist-3)}
+.skill{padding:12px;border-radius:12px;background:#10202c;border:1px solid var(--line-soft);margin-bottom:10px}
+.skill .hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-weight:700;font-size:14px}
+.st-chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mist-2)}
+.st-chip.v{color:#8fe3cd;border-color:#2b7567}.st-chip.e{color:var(--lantern-hi);border-color:var(--lantern-lo)}
+.ghost-note{padding:14px;border-radius:12px;border:1px dashed var(--line);color:var(--mist-2);font-size:13px;line-height:1.55}
+.tiny{margin-top:26px;display:grid;gap:10px}
+.tiny small{color:var(--mist-3);font-size:12px;text-align:center}
+
+/* ---------- avatar + Kartu Petualang ---------- */
+.av{display:block;overflow:visible}
+.hero{text-align:center;margin-top:20px}
+.hero-frame{position:relative;height:250px;width:210px;margin:0 auto;border-radius:105px 105px 18px 18px;overflow:hidden;
+  background:radial-gradient(70% 55% at 50% 38%,rgba(240,177,74,.5),transparent 72%),linear-gradient(#0f2b3a,#1b4b57 58%,#c98a3a 100%);
+  box-shadow:0 0 0 1px rgba(240,177,74,.6),0 0 0 6px #0e1a24,0 0 0 7px rgba(240,177,74,.25),0 18px 40px -16px #000}
+.hero-frame .av{position:absolute;left:-2%;bottom:-14px;width:104%;height:auto}
+.hero .pill-btn{display:inline-flex;align-items:center;gap:7px;margin-top:18px}
+.hero h2{font:700 22px/1.15 var(--font-body);margin-top:16px}
+.hero .rk{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:7px;color:var(--mist-2);font-size:13px}
+.hero .xp{max-width:310px;margin:16px auto 0;text-align:left}
+.vsel{margin-top:16px}
+.vbanner{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:10px 12px;border-radius:12px;font-size:12.5px;line-height:1.5;border:1px solid var(--line);background:#10202c;color:var(--mist-2)}
+.vbanner svg{width:18px;height:18px;flex:none;margin-top:1px}
+.vbanner.req{border-color:#245a50;background:#0f2a2b;color:#b9e6dc}.vbanner.req svg{color:var(--jade)}
+.vbanner.other svg{color:var(--lantern)}
+
+.idcard{--c:16px;--edge:rgba(240,177,74,.6);--fill:#15222b;margin-top:24px;padding:16px 16px 14px}
+.idcard::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(240,177,74,.05) 0 1px,transparent 1px 9px)}
+.idcard .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;font:700 12px var(--font-display);letter-spacing:.14em;text-transform:uppercase;color:var(--lantern)}
+.idcard .no{font:600 11.5px var(--font-body);letter-spacing:.06em;color:var(--mist-3)}
+.idc-main{display:grid;grid-template-columns:86px minmax(0,1fr);gap:14px;margin-top:14px;align-items:center}
+.photo{width:86px;height:108px;border-radius:12px;overflow:hidden;background:linear-gradient(#26475b,#16303f);border:1px solid var(--line);display:grid;place-items:center;color:#6b8aa0}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.idc-main b.nm{font:700 18px/1.2 var(--font-body);display:block;overflow-wrap:anywhere}
+.idc-main .rk2{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12.5px;color:var(--mist-2)}
+.priv{display:flex;align-items:center;gap:8px;margin:16px 0 10px;font:700 11px/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--mist-3)}
+.priv::before,.priv::after{content:"";height:1px;flex:1;background:var(--line)}
+.priv svg{width:13px;height:13px}
+.id-rows{display:grid;gap:9px;font-size:13px}
+.id-rows>div{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--mist-2)}
+.id-rows b{color:var(--mist);font-weight:700;text-align:right}
+.vchip{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;border:1px solid}
+.vchip.ok{color:#8fe3cd;border-color:#2b7567;background:#0e2a28}
+.vchip.wait{color:var(--lantern-hi);border-color:var(--lantern-lo);background:#2a2412}
+.vchip.none{color:var(--mist-2);border-color:var(--line)}
+.idnote{display:flex;gap:8px;margin-top:14px;font-size:12px;color:var(--mist-3);line-height:1.5}
+.idnote svg{width:15px;height:15px;flex:none;margin-top:1px;color:var(--lantern)}
+.idcard .btn{min-height:42px;font-size:13.5px;margin-top:14px}
+.sk{height:12px;border-radius:6px;background:linear-gradient(90deg,#1f3445,#2b4559,#1f3445)}
+
+.cust-top{position:sticky;top:0;z-index:5;padding-bottom:14px;background:linear-gradient(var(--ink-900) 88%,rgba(14,26,36,0))}
+.cust-top .d-top{position:static;padding:12px 14px 6px;background:none}
+.cust-top .d-top .label{padding-right:0}
+.cust-prev{display:flex;justify-content:center;margin-top:6px}
+.cust-prev .hero-frame{height:190px;width:160px;border-radius:80px 80px 16px 16px;box-shadow:0 0 0 1px rgba(240,177,74,.6),0 0 0 4px #0e1a24,0 0 0 5px rgba(240,177,74,.25)}
+.opt{margin-top:20px}
+.opt .label{display:block;margin-bottom:10px}
+.opts,.swatches{display:flex;flex-wrap:wrap;gap:9px}
+.sw-btn{width:36px;height:36px;border-radius:50%;background:var(--sc);border:2px solid transparent;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.4)}
+.sw-btn[aria-pressed="true"]{border-color:var(--lantern-hi);box-shadow:inset 0 0 0 2px var(--ink-900),0 0 12px rgba(240,177,74,.55)}
+.cust-foot{position:sticky;bottom:0;z-index:5;display:grid;grid-template-columns:1fr 1.5fr;gap:10px;padding:40px 16px 16px;background:linear-gradient(rgba(14,26,36,0),var(--ink-900) 34%)}
+.id-photo{display:flex;align-items:center;gap:14px;margin-top:18px}
+.id-photo .photo{flex:none}
+.id-photo .pill-btn{display:inline-flex;align-items:center;gap:7px}
+
+/* ---------- sheets / overlays ---------- */
+.veil{position:absolute;inset:0;z-index:40;background:rgba(4,9,13,.66);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s}
+.veil.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:41;max-height:88%;overflow-y:auto;scrollbar-width:none;padding:22px 18px 22px;background:#122332;border-radius:24px 24px 0 0;border-top:1px solid rgba(240,177,74,.55);
+  transform:translateY(102%);transition:transform .34s cubic-bezier(.2,.8,.2,1),visibility 0s linear .34s;visibility:hidden}
+.sheet.on{transform:none;visibility:visible;transition:transform .34s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.sheet::-webkit-scrollbar{display:none}
+.sheet::before{content:"";display:block;width:42px;height:4px;border-radius:9px;background:var(--line);margin:-8px auto 16px}
+.sheet h3{font:700 20px/1.2 var(--font-display);letter-spacing:.03em}
+.sheet p.lead{color:var(--mist-2);margin-top:6px;font-size:13.5px}
+.field{margin-top:18px}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--mist-2);margin-bottom:7px}
+.field input{width:100%;padding:13px 14px;border-radius:12px;background:#0a141d;border:1px solid var(--line);color:var(--mist);font:600 16px var(--font-body)}
+.field input::placeholder{color:#546a7b;font-weight:500}
+.note{display:flex;gap:10px;margin-top:14px;padding:11px 12px;border-radius:12px;background:#10202c;border:1px solid var(--line-soft);font-size:12.5px;color:var(--mist-2)}
+.note svg{width:18px;height:18px;flex:none;color:var(--lantern);margin-top:1px}
+.sum{display:grid;gap:10px;margin:16px 0}
+.sum div{display:flex;justify-content:space-between;gap:14px;font-size:13.5px;color:var(--mist-2)}
+.sum div b{color:var(--mist);text-align:right}
+.sum .big b{color:var(--jade);font-size:16px}
+.sheet .btn+.btn{margin-top:10px}
+.done{position:absolute;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px 22px;text-align:center;background:radial-gradient(70% 40% at 50% 34%,rgba(240,177,74,.2),transparent 70%),#080e14}
+.done.on{display:flex}
+.stamp{width:150px;height:150px;color:var(--lantern);position:relative;display:grid;place-items:center;animation:stamp .7s cubic-bezier(.2,1.2,.3,1) both}
+.stamp svg{width:100%;height:100%;filter:drop-shadow(0 0 22px rgba(240,177,74,.5))}
+.stamp::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--lantern);opacity:0;animation:ring 1.1s .45s ease-out}
+@keyframes stamp{from{transform:scale(2.2) rotate(-14deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ring{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.6)}}
+.done h2{font:700 26px/1.1 var(--font-display);margin-top:22px;letter-spacing:.04em}
+.done p{color:var(--mist-2);margin-top:8px;font-size:14px;max-width:290px}
+.done .sumcard{--c:12px;--edge:var(--line);--fill:#132532;width:100%;margin:22px 0 20px;padding:14px 16px;text-align:left;font-size:13px}
+.done .sumcard b{display:block;font-size:15px;margin-bottom:6px}
+.done .sumcard span{display:block;color:var(--mist-2)}
+.done .acts{width:100%;display:grid;gap:10px}
+.toast{position:absolute;left:50%;bottom:92px;z-index:70;transform:translate(-50%,16px);opacity:0;pointer-events:none;max-width:calc(100% - 32px);width:max-content;padding:10px 16px;border-radius:12px;background:#1d3a4f;border:1px solid var(--lantern-lo);font-size:13px;font-weight:600;text-align:center;transition:.25s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;transition-delay:0s!important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="crest" viewBox="-20 -20 40 40">
+      <circle r="17.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <circle r="13.8" fill="none" stroke="currentColor" stroke-width=".6" stroke-dasharray="1.2 2.2"/>
+      <path d="M0-12 3-3 12 0 3 3 0 12-3 3-12 0-3-3Z" fill="currentColor"/>
+      <path d="M0-16.5V-13M0 13v3.5M-16.5 0H-13M13 0h3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="stage">
+  <aside class="brief" aria-label="Catatan prototipe">
+    <div class="logo">
+      <svg viewBox="0 0 40 40"><use href="#crest"/></svg>
+      <div><h1>Guild Petualang</h1><div class="ver">Prototipe klik v0.1</div></div>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Skenario uji</span>
+      <p>Kamu baru memasang aplikasi ini dan sedang butuh tambahan penghasilan. Coba cari pekerjaan yang bisa kamu ambil hari ini. Ucapkan keras-keras apa yang kamu pikirkan saat menggunakannya.</p>
+    </div>
+    <div class="row">
+      <button class="pill-btn" id="b-reset">Mulai ulang</button>
+      <button class="pill-btn" id="b-old">Lihat sebagai pengguna lama</button>
+    </div>
+    <small>Semua quest, nama, dan angka di prototipe ini hanya contoh. Biaya guild 10% hanya angka sementara.</small>
+  </aside>
+
+  <div class="phone" id="phone">
+    <div class="app">
+
+      <!-- HOME -->
+      <section class="screen hall" id="s-home" aria-label="Beranda">
+        <div class="scene" id="scene">
+          <div class="wall"></div>
+          <svg class="window" viewBox="0 0 300 360" aria-hidden="true">
+            <defs>
+              <linearGradient id="wSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A2230"/><stop offset=".55" stop-color="#1C5560"/><stop offset=".86" stop-color="#E8A94E"/><stop offset="1" stop-color="#F6C766"/></linearGradient>
+              <clipPath id="wClip"><path d="M18 360V150C18 72 78 18 150 18S282 72 282 150V360Z"/></clipPath>
+            </defs>
+            <g clip-path="url(#wClip)">
+              <rect width="300" height="360" fill="url(#wSky)"/>
+              <g fill="#fff" opacity=".85"><circle cx="64" cy="64" r="1.2"/><circle cx="104" cy="40" r="1"/><circle cx="196" cy="52" r="1.3"/><circle cx="252" cy="96" r="1"/><circle cx="46" cy="118" r="1"/><circle cx="238" cy="150" r="1.1"/></g>
+              <circle cx="216" cy="86" r="9" fill="#FFF3D2" opacity=".9"/>
+              <path d="M0 300V270H24V246L36 232L48 246V262H78V236H92V262H120V250L132 218L144 250V264H176V240H196V266H226V232L240 214L254 232V262H300V360H0Z" fill="#0A1620"/>
+              <g fill="#F6C766"><rect x="30" y="252" width="4" height="5"/><rect x="82" y="244" width="4" height="5"/><rect x="129" y="236" width="4" height="6"/><rect x="236" y="228" width="4" height="6"/><rect x="204" y="250" width="4" height="5"/></g>
+            </g>
+            <path d="M18 360V150C18 72 78 18 150 18S282 72 282 150V360" fill="none" stroke="#F0B14A" stroke-opacity=".6" stroke-width="2"/>
+            <path d="M30 360V152C30 82 86 32 150 32S270 82 270 152V360" fill="none" stroke="#F0B14A" stroke-opacity=".22"/>
+            <path d="M150 18V360M18 190H282" stroke="#0A1620" stroke-opacity=".5" stroke-width="3"/>
+          </svg>
+          <div class="banner l"><svg viewBox="0 0 40 40"><use href="#crest"/></svg></div>
+          <div class="banner r"><svg viewBox="0 0 40 40"><use href="#crest"/></svg></div>
+          <div class="lantern l"></div><div class="lantern r"></div>
+
+          <div class="terra-box">
+            <svg class="terra" id="terra" data-g="f" data-e="happy" viewBox="0 0 260 320" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Terra, resepsionis guild">
+              <defs>
+                <linearGradient id="tIris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B86A18"/><stop offset=".55" stop-color="#F0A93B"/><stop offset="1" stop-color="#FFDB8E"/></linearGradient>
+                <linearGradient id="tHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3F8FA"/><stop offset="1" stop-color="#C3D4DB"/></linearGradient>
+                <linearGradient id="tCoat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26766F"/><stop offset="1" stop-color="#143F45"/></linearGradient>
+                <radialGradient id="tHalo" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#F0B14A" stop-opacity=".5"/><stop offset="1" stop-color="#F0B14A" stop-opacity="0"/></radialGradient>
+                <g id="eyeO">
+                  <ellipse rx="13.5" ry="15.5" fill="#fff"/>
+                  <ellipse cy="1" rx="10.6" ry="14" fill="url(#tIris)"/>
+                  <ellipse cy="1" rx="4.6" ry="7.4" fill="#4A2608"/>
+                  <ellipse cy="-4" rx="10.6" ry="6" fill="#7A3F12" opacity=".35"/>
+                  <circle cx="-4" cy="-5" r="3.8" fill="#fff"/>
+                  <circle cx="4.5" cy="6" r="1.9" fill="#fff" opacity=".9"/>
+                  <path d="M-15 -4C-12 -14-2 -18 8 -16C13 -15 15 -11 15.5 -5" fill="none" stroke="#2B2230" stroke-width="3.6" stroke-linecap="round"/>
+                  <path d="M-15 -4L-19 -8" stroke="#2B2230" stroke-width="2.4" stroke-linecap="round"/>
+                </g>
+                <g id="eyeH">
+                  <path d="M-13 3Q0 -13 13 3" fill="none" stroke="#2B2230" stroke-width="3.8" stroke-linecap="round"/>
+                  <path d="M-13 3L-17 0" stroke="#2B2230" stroke-width="2.4" stroke-linecap="round"/>
+                </g>
+              </defs>
+              <ellipse cx="130" cy="140" rx="150" ry="170" fill="url(#tHalo)"/>
+              <g class="bob">
+                <!-- back hair -->
+                <g class="f sway"><path d="M130 18C66 18 44 72 48 128C50 170 40 215 52 266L86 266L88 196L172 196L174 266L208 266C220 215 210 170 212 128C216 72 194 18 130 18Z" fill="#B3C7CF" stroke="#9FB4BD" stroke-width=".8"/></g>
+                <g class="m"><path d="M130 30C80 30 66 80 72 132C76 150 84 150 86 140L174 140C176 150 184 150 188 132C194 80 180 30 130 30Z" fill="#B3C7CF" stroke="#9FB4BD" stroke-width=".8"/></g>
+                <!-- body F -->
+                <g class="f">
+                  <path d="M16 320V296C16 266 52 250 94 242L166 242C208 250 244 266 244 296V320Z" fill="url(#tCoat)"/>
+                  <path d="M100 240L130 294L160 240Z" fill="#F4F7F8"/>
+                  <path d="M92 238L130 298L104 314L62 262Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M168 238L130 298L156 314L198 262Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M40 276C66 264 82 264 96 270M220 276C194 264 178 264 164 270" stroke="#F0B14A" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <g transform="translate(130 266)"><path d="M0 0L-24 -11V13Z" fill="#E2604F"/><path d="M0 0L24 -11V13Z" fill="#E2604F"/><rect x="-5.5" y="-7" width="11" height="14" rx="3.5" fill="#C94A3B"/></g>
+                  <g transform="translate(192 292)"><circle r="10" fill="#F0B14A"/><circle r="7" fill="#143F45"/><path d="M0-5 1.4-1.4 5 0 1.4 1.4 0 5-1.4 1.4-5 0-1.4-1.4Z" fill="#F0B14A"/></g>
+                </g>
+                <!-- body M -->
+                <g class="m">
+                  <path d="M2 320V300C2 268 46 252 92 244L168 244C214 252 258 268 258 300V320Z" fill="url(#tCoat)"/>
+                  <path d="M104 242L130 290L156 242Z" fill="#F4F7F8"/>
+                  <path d="M94 240L130 300L100 318L52 266Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M166 240L130 300L160 318L208 266Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M118 244L130 258L142 244L138 292L130 298L122 292Z" fill="#E2604F"/><circle cx="130" cy="272" r="3.2" fill="#F0B14A"/>
+                  <path d="M26 280L72 262M234 280L188 262" stroke="#F0B14A" stroke-width="5" stroke-linecap="round"/>
+                  <g transform="translate(194 296)"><circle r="10" fill="#F0B14A"/><circle r="7" fill="#143F45"/><path d="M0-5 1.4-1.4 5 0 1.4 1.4 0 5-1.4 1.4-5 0-1.4-1.4Z" fill="#F0B14A"/></g>
+                </g>
+                <!-- neck -->
+                <path d="M113 188V248C113 258 147 258 147 248V188Z" fill="#F2CDB8"/>
+                <path d="M113 200C122 216 138 216 147 200V188H113Z" fill="#D9A58B" opacity=".8"/>
+                <!-- ears (M) -->
+                <g class="m"><ellipse cx="82" cy="130" rx="6.5" ry="11" fill="#F1CFBA"/><ellipse cx="178" cy="130" rx="6.5" ry="11" fill="#F1CFBA"/></g>
+                <!-- face -->
+                <path class="f" d="M84 112C84 74 104 56 130 56C156 56 176 74 176 112C176 150 160 192 130 198C100 192 84 150 84 112Z" fill="#F9DDCC"/>
+                <path class="m" d="M82 112C82 74 104 56 130 56C156 56 178 74 178 112C178 146 168 184 146 196L114 196C92 184 82 146 82 112Z" fill="#F5D6C2"/>
+                <ellipse cx="100" cy="158" rx="11" ry="6" fill="#F28F86" opacity=".42"/>
+                <ellipse cx="160" cy="158" rx="11" ry="6" fill="#F28F86" opacity=".42"/>
+                <!-- brows -->
+                <g class="brows" fill="none" stroke="#8FA6B1" stroke-width="2.8" stroke-linecap="round">
+                  <path d="M90 112Q103 104 118 109"/><path d="M142 109Q157 104 170 112"/>
+                </g>
+                <!-- eyes -->
+                <g class="eyes-open">
+                  <g class="blink"><use href="#eyeO" x="104" y="134"/></g>
+                  <g class="blink"><use href="#eyeO" transform="translate(156 134) scale(-1 1)"/></g>
+                </g>
+                <g class="eyes-happy"><use href="#eyeH" x="104" y="136"/><use href="#eyeH" transform="translate(156 136) scale(-1 1)"/></g>
+                <path d="M130 158Q127 163 131 164" fill="none" stroke="#D9A58B" stroke-width="1.6" stroke-linecap="round"/>
+                <!-- mouths -->
+                <path class="mouth-smile" d="M118 173Q130 183 142 173" fill="none" stroke="#B5574F" stroke-width="2.6" stroke-linecap="round"/>
+                <g class="mouth-happy"><path d="M116 170Q130 192 144 170Q130 175 116 170Z" fill="#A94442"/><path d="M122 180Q130 186 138 180Q130 177 122 180Z" fill="#E88A85"/></g>
+                <path class="mouth-calm" d="M122 175Q130 179 138 175" fill="none" stroke="#B5574F" stroke-width="2.6" stroke-linecap="round"/>
+                <g class="mouth-talk"><path class="talkp" d="M121 171Q130 188 139 171Q130 175 121 171Z" fill="#9C3E3E"/></g>
+                <!-- front hair F -->
+                <g class="f">
+                  <path d="M78 136C66 84 90 38 130 38C170 38 194 84 182 136C180 116 176 102 168 92C164 100 154 104 144 102C138 100 130 94 122 86C118 94 108 100 98 102C92 106 86 118 78 136Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8"/>
+                  <path d="M112 48C106 62 102 78 98 94M146 46C152 60 158 72 166 88M126 42C124 56 122 70 122 84" stroke="#A9BEC7" stroke-width="1.2" fill="none" opacity=".7" stroke-linecap="round"/>
+                  <g class="sway"><path d="M85 118C77 152 75 196 83 238C95 210 101 174 99 130Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8"/><path d="M175 118C183 152 185 196 177 238C165 210 159 174 161 130Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8"/></g>
+                  <path d="M128 40C122 22 138 12 148 20" fill="none" stroke="#E4EEF1" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M92 70L104 62L110 74L98 82Z" fill="#F0B14A" stroke="#C98A21" stroke-width=".8" stroke-linejoin="round"/>
+                </g>
+                <!-- front hair M -->
+                <g class="m">
+                  <path d="M104 46L112 28L124 42L136 24L146 42L158 30L160 48Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8" stroke-linejoin="round"/>
+                  <path d="M80 130C70 82 92 40 130 38C168 40 190 82 180 130C176 114 170 102 162 96C154 106 142 102 132 92C126 102 114 106 104 102C96 108 86 118 80 130Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8"/>
+                  <path d="M112 50C106 64 104 80 100 96M148 50C154 62 158 74 164 90" stroke="#A9BEC7" stroke-width="1.2" fill="none" opacity=".7" stroke-linecap="round"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <div class="counter">
+            <svg class="prop ledger" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 30L38 24V4L2 8Z" fill="#E9EFF2"/><path d="M78 30L42 24V4L78 8Z" fill="#D5DEE3"/><path d="M38 4V24H42V4Z" fill="#7a5a1c"/><path d="M8 13L32 10M8 18L32 15M48 10L72 13M48 15L72 18" stroke="#9db0be" stroke-width="1.2"/><path d="M0 31L38 25L80 31V34H0Z" fill="#5b4116"/></svg>
+            <svg class="prop bell" viewBox="0 0 44 36" aria-hidden="true"><path d="M6 28C6 14 12 8 22 8S38 14 38 28Z" fill="#E7A236"/><path d="M12 24C12 16 15 13 19 12" stroke="#FFE7B0" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="3" y="28" width="38" height="5" rx="2.5" fill="#B57A14"/><circle cx="22" cy="6" r="3.4" fill="#F8CF7E"/></svg>
+          </div>
+        </div>
+
+        <div class="ui-top">
+          <div class="gender" role="group" aria-label="Wujud Terra">
+            <span class="gender-cap">Terra</span>
+            <button id="g-f" aria-pressed="true">Perempuan</button>
+            <button id="g-m" aria-pressed="false">Laki-laki</button>
+          </div>
+        </div>
+
+        <div class="dlg" id="dlg" hidden>
+          <div class="dlg-wrap">
+            <span class="plate">TERRA</span>
+            <div class="dlg-box cut" id="dlgBox">
+              <button class="dlg-skip" id="dlgSkip" aria-label="Lewati dialog">Lewati ›</button>
+              <p class="dlg-text" id="dlgText" aria-live="polite"></p>
+              <i class="dlg-next" id="dlgNext"></i>
+            </div>
+          </div>
+          <div class="choices" id="choices"></div>
+        </div>
+      </section>
+
+      <!-- BOARD -->
+      <section class="screen" id="s-board" hidden aria-label="Papan Permintaan">
+        <div class="pad" id="boardBody"></div>
+      </section>
+
+      <!-- DETAIL -->
+      <section class="screen" id="s-detail" hidden aria-label="Detail quest">
+        <div id="detailBody"></div>
+      </section>
+
+      <!-- PROFILE -->
+      <section class="screen" id="s-profile" hidden aria-label="Profil">
+        <div class="pad" id="profileBody"></div>
+      </section>
+
+      <!-- AVATAR CUSTOMIZER -->
+      <section class="screen" id="s-avatar" hidden aria-label="Ubah avatar">
+        <div class="cust-top">
+          <div class="d-top">
+            <button class="icon-btn" id="avBack" aria-label="Kembali"></button>
+            <span class="label">Ubah avatar</span>
+            <button class="icon-btn" id="avRand" aria-label="Acak avatar"></button>
+          </div>
+          <div class="cust-prev" id="custPrev"></div>
+        </div>
+        <div style="padding:0 18px 8px" id="custOpts"></div>
+        <div class="cust-foot">
+          <button class="btn ghost" id="avCancel">Batal</button>
+          <button class="btn" id="avSave">Simpan avatar</button>
+        </div>
+      </section>
+
+      <nav class="dock hide" id="dock" aria-label="Navigasi utama"></nav>
+
+      <div class="veil" id="veil"></div>
+
+      <div class="sheet" id="sh-reg" role="dialog" aria-label="Daftar sebagai petualang">
+        <h3>Daftar sebagai Petualang</h3>
+        <p class="lead">Satu langkah lagi sebelum kamu bisa mengambil quest.</p>
+        <div class="field">
+          <label for="regName">Nama petualang</label>
+          <input id="regName" type="text" maxlength="18" placeholder="Contoh: Elang Biru" autocomplete="off">
+        </div>
+        <div class="note" id="regNote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+          <span><b>Rank F boleh anonim.</b> Kamu cukup memakai nama samaran. Mulai Rank E, guild akan meminta identitas dan bukti identitasmu.</span>
+        </div>
+        <div style="height:18px"></div>
+        <button class="btn" id="regGo" disabled>Resmi jadi Petualang</button>
+        <button class="btn ghost" id="regCancel">Nanti saja</button>
+      </div>
+
+      <div class="sheet" id="sh-confirm" role="dialog" aria-label="Konfirmasi ambil quest">
+        <h3>Cek sebelum mengambil</h3>
+        <p class="lead" id="cfTitle"></p>
+        <div class="sum" id="cfSum"></div>
+        <div class="note" id="cfNote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+          <span>Jika kamu membatalkan tanpa alasan valid atau lalai, dana kembali ke pemberi quest dan kamu bisa terkena sanksi. Dengan menekan tombol di bawah, kamu setuju pada ketentuan quest ini.</span>
+        </div>
+        <div style="height:18px"></div>
+        <button class="btn" id="cfGo">Terima & ambil quest</button>
+        <button class="btn ghost" id="cfCancel">Kembali</button>
+      </div>
+
+      <div class="sheet" id="sh-id" role="dialog" aria-label="Lengkapi identitas">
+        <h3>Identitas Petualang</h3>
+        <p class="lead">Dipakai di Kartu Petualang milikmu.</p>
+        <div class="id-photo">
+          <div class="photo" id="idPhotoPrev"></div>
+          <div>
+            <button class="pill-btn" id="idPick" type="button"></button>
+            <input type="file" id="idFile" accept="image/*" hidden>
+            <p style="font-size:12px;color:var(--mist-3);margin-top:8px">Foto wajah, maksimal 6 MB.</p>
+          </div>
+        </div>
+        <div class="field"><label for="idFull">Nama lengkap (sesuai identitas)</label><input id="idFull" type="text" maxlength="40" autocomplete="off" placeholder="Nama lengkap"></div>
+        <div class="field"><label for="idNik">Nomor identitas (16 digit)</label><input id="idNik" type="text" inputmode="numeric" maxlength="16" autocomplete="off" placeholder="16 angka"></div>
+        <div class="field"><label for="idCity">Kota domisili</label><input id="idCity" type="text" maxlength="30" autocomplete="off" placeholder="Contoh: Bandung"></div>
+        <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+          <span>Untuk uji coba prototipe, isi data contoh saja. Data hanya ada di halaman ini dan hilang saat dimuat ulang.</span></div>
+        <div style="height:18px"></div>
+        <button class="btn" id="idGo" disabled>Simpan identitas</button>
+        <button class="btn ghost" id="idCancel">Batal</button>
+      </div>
+
+      <div class="done" id="done" role="dialog" aria-label="Quest diterima"></div>
+      <div class="toast" id="toast" role="status"></div>
+
+      <!-- DOORS -->
+      <div class="doors" id="doors">
+        <div class="flare"></div>
+        <div class="leaf l"><svg class="crest-big" viewBox="0 0 40 40"><use href="#crest"/></svg></div>
+        <div class="leaf r"><svg class="crest-big" viewBox="0 0 40 40"><use href="#crest"/></svg></div>
+        <button class="skip-intro" id="skipIntro">Lewati ›</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- data ---------- */
+var RANKS=['F','E','D','C','B','A','S'];
+var RANK_NAME={F:'Petualang baru',E:'Petualang junior',D:'Petualang senior',C:'Petualang tingkat atas',B:'Petualang berpengalaman',A:'Petualang expert',S:'Petualang tertinggi'};
+var RANK_COLOR={F:['#B4C0C9','#66747F'],E:['#E6A872','#8F572B'],D:['#E4EBF0','#81919D'],C:['#F8CF7E','#B57A14'],B:['#82E2C9','#2C8570'],A:['#A9C2FF','#3A56B3'],S:['#FFA08B','#A8281C']};
+var RANK_RANGE={F:[0,1000],E:[1000,3000],D:[3000,7000],C:[7000,15000],B:[15000,30000],A:[30000,60000],S:[60000,60000]};
+var DIFF={F:'Ringan',E:'Cukup ringan',D:'Sedang',C:'Menantang',B:'Berat',A:'Sangat berat',S:'Legendaris'};
+var FEE=0.10;
+
+var QUESTS=[
+ {id:'q1',title:'Cari dompet yang hilang di Taman Lansia',giver:'Warga',who:'Bu Ratna',loc:'Bandung',dist:'2,1 km',remote:false,rank:'F',stat:null,reward:75000,exp:40,left:'1 hari',within:'24 jam setelah diambil',
+  desc:'Dompet cokelat hilang kemarin sore di sekitar bangku dekat danau kecil. Isinya KTP dan beberapa kartu. Kabari lewat chat guild begitu ketemu, lalu serahkan langsung ke pemiliknya.',
+  stages:[['Dompet ditemukan & difoto',50],['Diserahkan ke pemilik & dikonfirmasi',50]],badges:[['good','Pembayar Tepat Waktu']]},
+ {id:'q2',title:'Bantu pindahan kos ke lantai 3',giver:'Warga',who:'Pak Hendra',loc:'Bandung',dist:'3,4 km',remote:false,rank:'F',stat:null,reward:150000,exp:60,left:'2 hari',within:'4 jam setelah mulai',
+  desc:'Pindahan dari kamar lantai 1 ke lantai 3, tanpa lift. Ada kasur lipat, dua lemari plastik, dan sekitar 12 kardus. Dibutuhkan satu orang yang kuat dan teliti dengan barang pecah belah.',
+  stages:[['Barang dipindahkan & dicek bersama',100]],badges:[['bad','Moving Goalpost','aktif 12 hari lagi']]},
+ {id:'q3',title:'Input 200 data stok barang ke spreadsheet',giver:'UMKM',who:'Toko Kain Sari',loc:'Remote',dist:'',remote:true,rank:'F',stat:null,reward:120000,exp:50,left:'3 hari',within:'48 jam setelah diambil',
+  desc:'Catatan stok masih di buku tulis. Foto halamannya akan dikirim lewat chat guild. Ketik ke templat spreadsheet yang disediakan: nama barang, ukuran, warna, jumlah.',
+  stages:[['100 data pertama diinput',50],['Seluruh data selesai & dicek',50]],badges:[['good','Pembayar Tepat Waktu'],['good','Jelas Memberi Arahan']]},
+ {id:'q4',title:'Antar 12 kotak nasi ke Balai Kelurahan',giver:'Pemerintah',who:'Kelurahan Cipaganti',loc:'Bandung',dist:'1,2 km',remote:false,rank:'F',stat:null,reward:180000,exp:70,left:'5 jam',within:'2 jam setelah diambil',
+  desc:'Kotak nasi untuk rapat warga diambil di warung mitra, lalu diantar ke Balai Kelurahan sebelum pukul 11.30. Harus membawa kendaraan sendiri.',
+  stages:[['Kotak nasi diterima di balai & dihitung',100]],badges:[['good','Pembayar Tepat Waktu']]},
+ {id:'q5',title:'Desain poster promo kopi susu',giver:'UMKM',who:'Kopi Senja',loc:'Bandung',dist:'0,8 km',remote:false,rank:'F',stat:{name:'Desain Grafis',min:40},reward:200000,exp:90,left:'2 hari',within:'3 hari setelah diambil',
+  desc:'Poster A3 untuk promo menu baru. Logo dan foto produk disediakan. Warna mengikuti identitas kedai: cokelat tua dan krem. Hasil akhir dalam format siap cetak dan versi untuk Instagram.',
+  stages:[['Konsep & tata letak disetujui',30],['Draf lengkap',40],['File akhir siap cetak',30]],badges:[['good','Pembayar Tepat Waktu']]},
+ {id:'q6',title:'Temani lansia kontrol rutin ke puskesmas',giver:'Warga',who:'Keluarga Pak Dedi',loc:'Bandung',dist:'4,0 km',remote:false,rank:'E',stat:null,reward:100000,exp:120,left:'3 hari',within:'Hari kontrol, sekitar 4 jam',
+  desc:'Ibu berusia 72 tahun perlu didampingi dari rumah ke puskesmas dan kembali lagi. Jalannya pelan, bisa memakai tongkat. Perlu sabar dan komunikatif.',
+  stages:[['Pulang dengan selamat & dikonfirmasi keluarga',100]],badges:[['good','Pembayar Tepat Waktu']]},
+ {id:'q7',title:'Website katalog sederhana untuk toko batik',giver:'UMKM',who:'Batik Parahyangan',loc:'Remote',dist:'',remote:true,rank:'C',stat:{name:'Pemrograman',min:60},reward:1500000,exp:600,left:'6 hari',within:'14 hari setelah diambil',
+  desc:'Situs satu halaman berisi katalog 30 produk, tombol pesan ke WhatsApp, dan peta lokasi toko. Konten dan foto produk disediakan pemilik. Hosting dan domain sudah ada.',
+  stages:[['Desain halaman disetujui',25],['Katalog & konten terpasang',45],['Peluncuran & serah terima',30]],badges:[['good','Jelas Memberi Arahan']]},
+ {id:'q8',title:'Terjemahkan brosur wisata ID ke Inggris',giver:'Pemerintah',who:'Dinas Pariwisata Kota',loc:'Remote',dist:'',remote:true,rank:'D',stat:{name:'Penerjemahan',min:50},reward:350000,exp:250,left:'4 hari',within:'5 hari setelah diambil',
+  desc:'Brosur 6 halaman tentang wisata sejarah kota. Terjemahan harus natural, bukan kata per kata, dan nama tempat mengikuti ejaan resmi.',
+  stages:[['Separuh pertama diterjemahkan',50],['Selesai & ditinjau',50]],badges:[['good','Pembayar Tepat Waktu']]}
+];
+var ARKA={name:'Arka',rank:'C',exp:8420,general:[['Ketelitian',78],['Komunikasi',65],['Pemecahan masalah',84],['Kedisiplinan',72]],
+  special:[['Pemrograman',72,'v','Terverifikasi'],['Desain Grafis',85,'e','Berpengalaman']],
+  good:['Reliable Adventurer','Community Helper'],bad:[['Deadline Breaker','aktif 12 hari lagi']]};
+
+/* ---------- helpers ---------- */
+var RP=function(n){return 'Rp'+n.toLocaleString('id-ID')};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var P={
+ home:'<path d="M5 21V11a7 7 0 0 1 14 0v10M9 21v-6a3 3 0 0 1 6 0v6"/>',
+ board:'<path d="M6 3h12v14l-3 4H6z"/><path d="M9 8h6M9 12h6"/>',
+ prof:'<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M12 9l1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 15l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>',
+ lock:'<path d="M7 11V8a5 5 0 0 1 10 0v3"/><path d="M5 11h14v10H5z"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ pin:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3 3 15 0 18-3-3-3-15 0-18z"/>',
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ back:'<path d="M15 5l-7 7 7 7"/>',
+ close:'<path d="M6 6l12 12M18 6L6 18"/>',
+ shieldc:'<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M8.8 12l2.4 2.4 4-4.4"/>',
+ bolt:'<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+ warn:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.2"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.2"/>',
+ star:'<path d="M12 3.5l2.4 5 5.4.7-4 3.8 1 5.4L12 15.7l-4.8 2.7 1-5.4-4-3.8 5.4-.7z"/>',
+ coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 10c0-1.4 1.1-2 2.5-2s2.5.6 2.5 2-1.1 1.8-2.5 2-2.5.6-2.5 2 1.1 2 2.5 2 2.5-.6 2.5-2"/>',
+ eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ eyeoff:'<path d="M3 3l18 18"/><path d="M10.6 5.2A9.7 9.7 0 0 1 12 5c6 0 10 7 10 7a17 17 0 0 1-3.2 3.9M6.5 6.7C3.9 8.4 2 12 2 12s4 7 10 7c1.6 0 3-.4 4.3-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4.5-7 8-7s7 2.5 8 7"/>',
+ camera:'<path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+ pencil:'<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>',
+ dice:'<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="15" r="1"/><circle cx="15" cy="9" r="1"/><circle cx="9" cy="15" r="1"/>'
+};
+function ic(n,s){s=s||18;return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>'}
+var uid=0;
+function seal(r,s){
+  s=s||44;var c=RANK_COLOR[r],id='sg'+(uid++);
+  return '<svg class="seal" width="'+s+'" height="'+Math.round(s*1.15)+'" viewBox="0 0 40 46" aria-hidden="true"><defs><linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs>'+
+  '<path d="M20 1.5 37 8v16c0 10.5-8 17.5-17 21C11 41.5 3 34.5 3 24V8z" fill="url(#'+id+')" stroke="rgba(255,255,255,.6)" stroke-width="1"/>'+
+  '<path d="M20 6 33 11v13c0 8-6 13.6-13 16.6C13 37.6 7 32 7 24V11z" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="1.2"/>'+
+  '<text x="20" y="29" text-anchor="middle" font-family="Cinzel,Georgia,serif" font-weight="700" font-size="19" fill="#1a1205">'+r+'</text></svg>';
+}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},2600)}
+function qById(id){return QUESTS.filter(function(q){return q.id===id})[0]}
+
+/* ---------- state ---------- */
+var S={registered:false,name:'',screen:'home',tab:'local',cat:'Semua',onlyOk:false,taken:[],sample:false,doorsDone:false,pending:null,detailFrom:'board',
+  avatar:defAv(),photo:null,ident:null,viewer:'me'};
+function check(q){
+  var why=[];
+  if(RANKS.indexOf(q.rank)>0)why.push({k:'rank',t:'Rank '+q.rank+(q.rank==='E'?' (butuh verifikasi identitas)':'')});
+  if(q.stat)why.push({k:'stat',t:q.stat.name+' minimal '+q.stat.min});
+  return {ok:!why.length,why:why};
+}
+
+/* ---------- Terra + dialogue ---------- */
+var terra=$('#terra');
+var dlg={lines:[],i:0,choices:[],timer:null,typing:false,full:'',done:null};
+function setExpr(e){terra.setAttribute('data-e',e||'smile')}
+function typeText(text,done){
+  clearInterval(dlg.timer);var el=$('#dlgText');el.textContent='';$('#dlgNext').classList.remove('on');
+  dlg.full=text;dlg.done=done;dlg.typing=true;terra.classList.add('talking');
+  if(RM){el.textContent=text;endTyping();return}
+  var n=0;dlg.timer=setInterval(function(){n++;el.textContent=text.slice(0,n);if(n>=text.length){clearInterval(dlg.timer);endTyping()}},20);
+}
+function endTyping(){
+  dlg.typing=false;terra.classList.remove('talking');
+  if(dlg.done)dlg.done();
+}
+function showLine(){
+  var L=dlg.lines[dlg.i];setExpr(L.e);
+  typeText(L.t,function(){
+    if(dlg.i<dlg.lines.length-1)$('#dlgNext').classList.add('on');
+    else renderChoices();
+  });
+}
+function say(lines,choices){
+  dlg.lines=lines;dlg.i=0;dlg.choices=choices||[];$('#choices').innerHTML='';
+  $('#dlg').hidden=false;showLine();
+}
+function tapDialog(){
+  if(dlg.typing){clearInterval(dlg.timer);$('#dlgText').textContent=dlg.full;endTyping();return}
+  if(dlg.i<dlg.lines.length-1){dlg.i++;showLine()}
+}
+function skipDialog(){
+  clearInterval(dlg.timer);dlg.i=dlg.lines.length-1;
+  var L=dlg.lines[dlg.i];setExpr(L.e);$('#dlgText').textContent=L.t;$('#dlgNext').classList.remove('on');
+  dlg.typing=false;terra.classList.remove('talking');renderChoices();
+}
+function renderChoices(){
+  var box=$('#choices');if(box.children.length)return;
+  dlg.choices.forEach(function(c){
+    var b=document.createElement('button');b.className='choice cut'+(c.main?' main':'');
+    b.innerHTML='<i class="dia"></i><span>'+esc(c.label)+'</span>';
+    b.addEventListener('click',c.fn);box.appendChild(b);
+  });
+}
+$('#dlgBox').addEventListener('click',function(e){if(e.target.closest('#dlgSkip'))return;tapDialog()});
+$('#dlgSkip').addEventListener('click',skipDialog);
+
+function newChoices(){return [
+  {label:'Ya, daftarkan aku',main:true,fn:function(){openReg(null)}},
+  {label:'Lihat papan quest dulu',fn:function(){go('board')}},
+  {label:'Aku mau memasang permintaan',fn:function(){toast('Alur memasang permintaan belum ada di prototipe ini.')}}
+]}
+function oldChoices(){
+  var c=[{label:'Buka papan quest',main:true,fn:function(){go('board')}}];
+  if(S.taken.length)c.push({label:'Quest yang sedang berjalan ('+S.taken.length+')',fn:function(){openDetail(S.taken[S.taken.length-1],'home')}});
+  c.push({label:'Lihat profilku',fn:function(){go('profile')}});
+  return c;
+}
+function enterHome(first){
+  if(!S.registered){
+    if(first)say([
+      {t:'Selamat datang di Guild Petualang.',e:'happy'},
+      {t:'Aku Terra, resepsionis di sini. Warga memasang permintaan di papan guild, dan para petualang mengambilnya.',e:'smile'},
+      {t:'Setiap permintaan dibayar di muka. Uangnya ditahan guild sampai pekerjaan selesai, jadi kedua pihak sama-sama aman.',e:'calm'},
+      {t:'Siapa pun boleh mulai dari Rank F. Mau jadi petualang?',e:'smile'}
+    ],newChoices());
+    else say([{t:'Kembali lagi? Kalau sudah siap, aku bisa mendaftarkanmu jadi petualang.',e:'smile'}],newChoices());
+  }else{
+    var greet=S.taken.length?'Selamat datang kembali, '+S.name+'! Semoga quest yang sedang kamu kerjakan lancar.':'Selamat datang kembali, '+S.name+'! Ada banyak permintaan baru hari ini.';
+    say([{t:greet,e:'happy'}],oldChoices());
+  }
+}
+
+/* ---------- intro ---------- */
+var introT;
+function runIntro(){
+  var d=$('#doors'),sc=$('#scene');d.classList.remove('gone','open');S.doorsDone=false;
+  $('#dlg').hidden=true;sc.classList.add('prezoom');
+  if(RM){endIntro();return}
+  setTimeout(function(){d.classList.add('open');sc.classList.remove('prezoom')},450);
+  clearTimeout(introT);introT=setTimeout(endIntro,3000);
+}
+function endIntro(){
+  clearTimeout(introT);var d=$('#doors');d.classList.add('gone');d.classList.remove('open');$('#scene').classList.remove('prezoom');
+  if(!S.doorsDone){S.doorsDone=true;$('#dock').classList.remove('hide');renderDock();enterHome(true)}
+}
+$('#skipIntro').addEventListener('click',endIntro);
+
+/* ---------- navigation ---------- */
+var SCREENS=['home','board','detail','profile','avatar'];
+function renderDock(){
+  var d=$('#dock'),cur=S.screen==='detail'?(S.detailFrom==='home'?'home':S.detailFrom):(S.screen==='avatar'?'profile':S.screen);
+  var items=[['home','Beranda','home'],['board','Papan','board'],['profile','Profil','prof']];
+  d.innerHTML=items.map(function(i){return '<button data-go="'+i[0]+'"'+(cur===i[0]?' aria-current="page"':'')+'>'+ic(i[2],23)+'<span>'+i[1]+'</span></button>'}).join('');
+}
+$('#dock').addEventListener('click',function(e){var b=e.target.closest('button[data-go]');if(b)go(b.getAttribute('data-go'))});
+function go(name){
+  closeSheets();
+  S.screen=name;
+  SCREENS.forEach(function(s){var el=$('#s-'+s);var on=s===name;el.hidden=!on;if(on){el.scrollTop=0;el.classList.remove('enter');void el.offsetWidth;el.classList.add('enter')}});
+  $('#dock').classList.toggle('hide',name==='detail'||name==='avatar'||!S.doorsDone);
+  renderDock();
+  if(name==='board')renderBoard();
+  if(name==='profile')renderProfile();
+  if(name==='home'&&S.doorsDone)enterHome(false);
+}
+
+/* ---------- board ---------- */
+function renderBoard(){
+  var body=$('#boardBody');
+  var inTab=QUESTS.filter(function(q){return S.tab==='remote'?q.remote:!q.remote});
+  var all=QUESTS;
+  var list=inTab.filter(function(q){
+    if(S.cat==='Warga'&&q.giver!=='Warga')return false;
+    if(S.cat==='UMKM'&&q.giver!=='UMKM')return false;
+    if(S.cat==='Pemerintah'&&q.giver!=='Pemerintah')return false;
+    if(S.cat==='Spesialis'&&!q.stat)return false;
+    if(S.onlyOk&&!check(q).ok)return false;
+    return true;
+  });
+  var okAll=all.filter(function(q){return check(q).ok}).length;
+  var nLocal=QUESTS.filter(function(q){return !q.remote}).length,nRem=QUESTS.length-nLocal;
+  var cats=['Semua','Warga','UMKM','Pemerintah','Spesialis'];
+  var h='<h1 class="scr-title">Papan Permintaan</h1>'+
+   '<div class="sub">'+ic('pin')+'<span>Guild Bandung</span><em>data contoh</em></div>'+
+   '<div class="tabs" role="tablist">'+
+     '<button role="tab" aria-selected="'+(S.tab==='local')+'" data-tab="local">'+ic('pin')+'Di kotaku <span class="cnt">'+nLocal+'</span></button>'+
+     '<button role="tab" aria-selected="'+(S.tab==='remote')+'" data-tab="remote">'+ic('globe')+'Jarak jauh <span class="cnt">'+nRem+'</span></button>'+
+   '</div>';
+  if(S.taken.length){
+    var tq=qById(S.taken[S.taken.length-1]);
+    h+='<button class="active-banner cut" data-open="'+tq.id+'">'+ic('check',20)+'<span>'+S.taken.length+' quest sedang berjalan<small>'+esc(tq.title)+'</small></span></button>';
+  }
+  h+='<div class="chips" role="group" aria-label="Kategori">'+cats.map(function(c){return '<button class="chip" aria-pressed="'+(S.cat===c)+'" data-cat="'+c+'">'+c+'</button>'}).join('')+'</div>';
+  h+='<div class="switch-row"><span><b>Hanya yang bisa kuambil</b><br>'+(S.registered?'Kamu Rank F':'Rank F, tanpa stat khusus')+' · '+okAll+' dari '+all.length+' quest</span><button class="sw" role="switch" aria-checked="'+S.onlyOk+'" aria-label="Hanya yang bisa kuambil" id="swOk"></button></div>';
+  h+='<div class="list">';
+  if(!list.length)h+='<div class="empty"><b>Tidak ada quest yang cocok</b>Coba ganti kategori atau matikan filter.</div>';
+  list.forEach(function(q){h+=card(q)});
+  h+='</div>';
+  body.innerHTML=h;
+}
+function card(q){
+  var c=check(q);
+  var req='<div class="req">';
+  req+=c.why.length?c.why.map(function(w){return '<span class="no">'+ic('lock')+esc(w.t)+'</span>'}).join(''):'<span class="ok">'+ic('check')+'Memenuhi syarat</span>';
+  if(q.stat&&c.ok)req+='<span class="ok">'+esc(q.stat.name)+' ≥ '+q.stat.min+'</span>';
+  req+='</div>';
+  return '<button class="qcard cut'+(c.ok?'':' locked')+'" data-open="'+q.id+'">'+
+    seal(q.rank,46)+
+    '<div style="min-width:0"><div class="q-title">'+esc(q.title)+'</div>'+
+    '<div class="meta"><span class="tag" data-t="'+q.giver+'">'+q.giver+'</span>'+
+      (q.remote?'<span class="where">'+ic('globe')+'Remote</span>':'<span class="where">'+ic('pin')+q.loc+' · '+q.dist+'</span>')+'</div>'+
+    '<div class="q-foot"><span class="reward num">'+RP(q.reward)+'</span><span class="exp num">'+ic('bolt')+'+'+q.exp+' EXP</span><span class="left">'+ic('clock')+q.left+'</span></div>'+
+    req+'</div></button>';
+}
+$('#boardBody').addEventListener('click',function(e){
+  var t;
+  if((t=e.target.closest('[data-tab]'))){S.tab=t.getAttribute('data-tab');renderBoard();return}
+  if((t=e.target.closest('[data-cat]'))){S.cat=t.getAttribute('data-cat');renderBoard();return}
+  if(e.target.closest('#swOk')){S.onlyOk=!S.onlyOk;renderBoard();return}
+  if((t=e.target.closest('[data-open]'))){openDetail(t.getAttribute('data-open'),'board')}
+});
+
+/* ---------- detail ---------- */
+function openDetail(id,from){
+  S.detailFrom=from||'board';S.cur=id;
+  var q=qById(id),c=check(q),taken=S.taken.indexOf(id)>-1;
+  var net=Math.round(q.reward*(1-FEE)),fee=q.reward-net;
+  var h='<div class="d-top"><button class="icon-btn" id="dBack" aria-label="Kembali">'+ic('back',20)+'</button><span class="label">Detail quest</span></div><div style="padding:6px 18px 0">';
+  h+='<div class="d-hero">'+seal(q.rank,58)+'<div><h2>'+esc(q.title)+'</h2><div class="diff">Kesulitan <b>'+DIFF[q.rank]+'</b> · Rank minimum '+q.rank+'</div></div></div>';
+  h+='<div class="reward-box cut"><div class="lbl">Imbalan dari pemberi quest</div><div class="big num">'+RP(q.reward)+'</div>'+
+     '<div class="split num"><div><span>Biaya guild ('+Math.round(FEE*100)+'%)</span><b>−'+RP(fee)+'</b></div><div class="take"><span>Kamu terima</span><b>'+RP(net)+'</b></div><div><span>Hadiah EXP</span><b style="color:var(--jade)">+'+q.exp+' EXP</b></div></div></div>';
+  h+='<div class="escrow">'+ic('shieldc',20)+'<span><b>Dana sudah aman.</b> Pemberi quest membayar di muka dan guild menahan uangnya sampai pekerjaan dikonfirmasi selesai.</span></div>';
+  h+='<div class="h-sec"><i></i>Pekerjaan</div><p class="d-desc">'+esc(q.desc)+'</p>';
+  h+='<div class="h-sec"><i></i>Waktu</div><div class="facts"><div class="fact"><span class="label">Quest ditutup</span><b>'+q.left+' lagi</b></div><div class="fact"><span class="label">Lokasi</span><b>'+(q.remote?'Jarak jauh':q.loc+' · '+q.dist)+'</b></div><div class="fact wide"><span class="label">Batas selesai</span><b>'+esc(q.within)+'</b></div></div>';
+  h+='<div class="h-sec"><i></i>Syarat</div><div class="reqlist">';
+  var rankOk=RANKS.indexOf(q.rank)===0;
+  h+='<div class="reqrow '+(rankOk?'ok':'no')+'">'+ic(rankOk?'check':'lock')+'<span>Rank '+q.rank+' atau lebih tinggi'+(q.rank==='E'?'<small>Mulai Rank E, identitas wajib diverifikasi</small>':'')+'</span><span class="st">'+(rankOk?'Terpenuhi':'Kamu Rank F')+'</span></div>';
+  if(q.stat)h+='<div class="reqrow no">'+ic('lock')+'<span>'+esc(q.stat.name)+' minimal '+q.stat.min+'<small>Stat khusus, tidak bisa digantikan rank</small></span><span class="st">Belum punya</span></div>';
+  else h+='<div class="reqrow ok">'+ic('check')+'<span>Tanpa stat khusus<small>Siapa pun yang rank-nya cukup boleh mengambil</small></span><span class="st">Terpenuhi</span></div>';
+  h+='</div>';
+  h+='<div class="h-sec"><i></i>Tahapan & pembayaran</div><div class="stages num">'+q.stages.map(function(s,i){
+    return '<div class="stage-row"><span class="dot">'+(i+1)+'</span><div><b>'+esc(s[0])+'</b><small>'+s[1]+'% dari imbalan</small></div><span class="amt">'+RP(Math.round(net*s[1]/100))+'</span></div>'}).join('')+'</div>';
+  h+='<div class="h-sec"><i></i>Jika ada masalah</div><div class="rules">'+
+    '<div class="rule-row">'+ic('clock')+'<span><b>Tenggat lewat, tapi sebagian besar selesai:</b> dibayar sesuai tahap yang selesai, dengan EXP lebih kecil.</span></div>'+
+    '<div class="rule-row">'+ic('warn')+'<span><b>Batal tanpa alasan valid:</b> dikenai sanksi sesuai tingkat pelanggaran.</span></div>'+
+    '<div class="rule-row">'+ic('shieldc')+'<span><b>Hasil ditolak:</b> pemberi quest wajib menulis alasan. Guild menilai secara netral.</span></div></div>';
+  h+='<div class="h-sec"><i></i>Pemberi quest</div><div class="giver"><div class="avatar">'+esc(q.who.charAt(0))+'</div><div><b>'+esc(q.who)+'</b><small><span class="tag" data-t="'+q.giver+'" style="margin-right:6px">'+q.giver+'</span>'+(q.giver==='Pemerintah'?'Tarif instansi':'')+'</small></div></div>';
+  h+='<div class="badges">'+q.badges.map(function(b){return '<span class="badge '+b[0]+'">'+ic(b[0]==='good'?'star':'warn')+esc(b[1])+(b[2]?'<small>· '+esc(b[2])+'</small>':'')+'</span>'}).join('')+'</div>';
+  h+='</div>';
+  var cta='';
+  if(taken)cta='<p>Quest ini sedang kamu kerjakan.</p><button class="btn" disabled>Quest sedang berjalan</button>';
+  else if(!c.ok)cta='<p>'+(q.stat?'Ajukan portofolio, sertifikat, atau ikut ujian guild untuk membuka stat ini.':'Naikkan rank dengan menyelesaikan quest lain.')+'</p><button class="btn" disabled>'+ic('lock',18)+'Belum memenuhi syarat</button>';
+  else cta='<p>Baca syarat, tahapan, dan aturan di atas sebelum mengambil.</p><button class="btn" id="takeBtn">Ambil quest</button>';
+  h+='<div class="cta">'+cta+'</div>';
+  $('#detailBody').innerHTML=h;
+  go('detail');
+}
+$('#detailBody').addEventListener('click',function(e){
+  if(e.target.closest('#dBack')){go(S.detailFrom==='home'?'home':'board');return}
+  if(e.target.closest('#takeBtn')){
+    if(!S.registered)openReg(S.cur);else openConfirm(S.cur);
+  }
+});
+
+/* ---------- sheets ---------- */
+function openSheet(id){closeSheets();$('#veil').classList.add('on');$(id).classList.add('on')}
+function closeSheets(){$('#veil').classList.remove('on');$$('.sheet').forEach(function(s){s.classList.remove('on')})}
+$('#veil').addEventListener('click',closeSheets);
+function fillNoteIcons(){$$('.note svg').forEach(function(s){s.innerHTML=P.info})}
+fillNoteIcons();
+
+function openReg(pendingId){
+  S.pending=pendingId;$('#regName').value='';$('#regGo').disabled=true;openSheet('#sh-reg');
+}
+$('#regName').addEventListener('input',function(){$('#regGo').disabled=this.value.trim().length<3});
+$('#regCancel').addEventListener('click',closeSheets);
+$('#regGo').addEventListener('click',function(){
+  var n=$('#regName').value.trim();if(n.length<3)return;
+  S.registered=true;S.name=n;var pend=S.pending;S.pending=null;closeSheets();
+  if(pend){toast('Kamu resmi jadi Petualang Rank F.');setTimeout(function(){openConfirm(pend)},450)}
+  else{
+    go('home');
+    say([{t:'Selamat bergabung, '+n+'! Kamu resmi jadi Petualang Rank F.',e:'happy'},{t:'Semua orang mulai dari sini. Lihat papan quest, banyak yang bisa langsung kamu ambil.',e:'smile'}],
+      [{label:'Buka papan quest',main:true,fn:function(){go('board')}},{label:'Lihat profilku',fn:function(){go('profile')}}]);
+  }
+});
+
+function openConfirm(id){
+  var q=qById(id),net=Math.round(q.reward*(1-FEE));
+  $('#cfTitle').textContent=q.title;
+  $('#cfSum').innerHTML='<div><span>Kamu terima</span><b class="num">'+RP(net)+'</b></div><div><span>Hadiah EXP</span><b>+'+q.exp+' EXP</b></div><div><span>Batas selesai</span><b>'+esc(q.within)+'</b></div><div><span>Tahapan</span><b>'+q.stages.length+' tahap</b></div>';
+  openSheet('#sh-confirm');
+}
+$('#cfCancel').addEventListener('click',closeSheets);
+$('#cfGo').addEventListener('click',function(){
+  var q=qById(S.cur);if(S.taken.indexOf(q.id)<0)S.taken.push(q.id);closeSheets();
+  var net=Math.round(q.reward*(1-FEE));
+  var d=$('#done');
+  d.innerHTML='<div class="stamp"><svg viewBox="0 0 40 40"><use href="#crest"/></svg></div><h2>Quest diterima</h2><p>Selesaikan sebelum batas waktu. Dana sudah ditahan guild dan akan cair setelah dikonfirmasi.</p>'+
+    '<div class="sumcard cut"><b>'+esc(q.title)+'</b><span>Kamu terima '+RP(net)+' · +'+q.exp+' EXP</span><span>Batas selesai: '+esc(q.within)+'</span></div>'+
+    '<div class="acts"><button class="btn" id="dnBoard">Kembali ke papan</button><button class="btn ghost" id="dnProf">Lihat profilku</button></div>';
+  d.classList.add('on');
+  $('#dnBoard').addEventListener('click',function(){d.classList.remove('on');go('board')});
+  $('#dnProf').addEventListener('click',function(){d.classList.remove('on');go('profile')});
+});
+
+/* ---------- avatar ---------- */
+var AV_HAIR=[['short','Pendek'],['long','Panjang'],['pony','Kuncir'],['spiky','Jabrik']];
+var AV_HC=[['Cokelat','#7A4B2A'],['Hitam','#2B2831'],['Pirang','#E4BB62'],['Perak','#CBD6DC'],['Merah','#C2503F'],['Biru','#4F78C8'],['Hijau','#4FA383']];
+var AV_SKIN=[['Sangat terang','#FBE2D3'],['Terang','#F2CDB8'],['Sawo muda','#E0AE8A'],['Sawo matang','#C48A63'],['Cokelat','#8E5A3C'],['Gelap','#5E3B2A']];
+var AV_EYE=[['Cokelat','#7A4B2A'],['Madu','#E89B2F'],['Biru','#4F8FE0'],['Hijau','#3FA67F'],['Merah','#D9534F']];
+var AV_OUT=[['guild','Seragam Guild'],['cloak','Jubah Pengelana'],['armor','Zirah Ringan'],['jacket','Jaket Kurir']];
+var AV_ACC=[['none','Tanpa'],['glasses','Kacamata'],['band','Ikat Kepala'],['hat','Topi Petualang']];
+var ARKA_AV={hair:'spiky',hc:'#2B2831',skin:'#E0AE8A',eye:'#4F8FE0',out:'jacket',acc:'glasses'};
+function hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
+function mixc(a,b,t){var x=hx(a),y=hx(b);return '#'+[0,1,2].map(function(i){return ('0'+Math.round(x[i]+(y[i]-x[i])*t).toString(16)).slice(-2)}).join('')}
+function shade(c,t){return t<0?mixc(c,'#000000',-t):mixc(c,'#ffffff',t)}
+var avN=0;
+var BROOCH='<g transform="translate(192 294)"><circle r="10" fill="#F0B14A"/><circle r="7" fill="#143F45"/><path d="M0-5 1.4-1.4 5 0 1.4 1.4 0 5-1.4 1.4-5 0-1.4-1.4Z" fill="#F0B14A"/></g>';
+var SHOULDERS='M16 320V296C16 266 52 250 94 242L166 242C208 250 244 266 244 296V320Z';
+function outfitSVG(k){
+  if(k==='cloak')return '<path d="'+SHOULDERS+'" fill="#2B3C78"/><path d="M96 240L130 296L164 240Z" fill="#141B3A"/>'+
+    '<path d="M70 250C96 280 164 280 190 250L172 238C152 262 108 262 88 238Z" fill="#3A4F97" stroke="#C7D2E8" stroke-width="1.4" stroke-linejoin="round"/>'+
+    '<path d="M30 300C50 280 70 270 90 268M230 300C210 280 190 270 170 268" stroke="#4A60AE" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="130" cy="272" r="9" fill="#C7D2E8"/><circle cx="130" cy="272" r="5.5" fill="#2B3C78"/>';
+  if(k==='armor')return '<path d="'+SHOULDERS+'" fill="#2A3340"/>'+
+    '<path d="M70 252C96 244 164 244 190 252L186 306C160 314 100 314 74 306Z" fill="#B8C4CE" stroke="#E4ECF1" stroke-width="1.4" stroke-linejoin="round"/>'+
+    '<path d="M130 246V312M92 262L110 300M168 262L150 300" stroke="#8E9CA8" stroke-width="2" stroke-linecap="round"/>'+
+    '<path d="M14 292C14 262 40 248 70 250L62 292Z" fill="#9FB0BC" stroke="#E4ECF1" stroke-width="1.4" stroke-linejoin="round"/><path d="M246 292C246 262 220 248 190 250L198 292Z" fill="#9FB0BC" stroke="#E4ECF1" stroke-width="1.4" stroke-linejoin="round"/>'+
+    '<g fill="#E4ECF1"><circle cx="40" cy="272" r="2.4"/><circle cx="220" cy="272" r="2.4"/><circle cx="84" cy="290" r="2.2"/><circle cx="176" cy="290" r="2.2"/></g>'+
+    '<path d="M104 238C112 256 148 256 156 238L152 234C142 248 118 248 108 234Z" fill="#3B4654"/>';
+  if(k==='jacket')return '<path d="'+SHOULDERS+'" fill="#C4493A"/><path d="M104 240L130 290L156 240Z" fill="#1B2733"/>'+
+    '<path d="M92 238L128 284L100 298L66 258Z" fill="#A63A2E" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M168 238L132 284L160 298L194 258Z" fill="#A63A2E" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>'+
+    '<path d="M44 304L52 266M216 304L208 266" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".92"/>'+
+    '<path d="M130 288V320" stroke="#F8CF7E" stroke-width="2" stroke-dasharray="3 3"/>'+BROOCH;
+  return '<path d="'+SHOULDERS+'" fill="#1F6A66"/><path d="M100 240L130 294L160 240Z" fill="#F4F7F8"/>'+
+    '<path d="M92 238L130 298L104 314L62 262Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/><path d="M168 238L130 298L156 314L198 262Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>'+
+    '<path d="M40 276C66 264 82 264 96 270M220 276C194 264 178 264 164 270" stroke="#F0B14A" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+    '<g transform="translate(130 266)"><path d="M0 0L-24 -11V13Z" fill="#E2604F"/><path d="M0 0L24 -11V13Z" fill="#E2604F"/><rect x="-5.5" y="-7" width="11" height="14" rx="3.5" fill="#C94A3B"/></g>'+BROOCH;
+}
+function avatar(c){
+  var id='av'+(avN++),hc=c.hc,hb=shade(hc,-.16),hd=shade(hc,-.38),hl=shade(hc,.22),sk=c.skin,sd=shade(sk,-.15),ec=c.eye,H='url(#'+id+'h)';
+  var st=' stroke="'+hd+'" stroke-width=".9" stroke-linejoin="round"';
+  var o='<svg class="av" viewBox="0 0 260 320" role="img" aria-label="Avatar petualang"><defs>'+
+    '<linearGradient id="'+id+'h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+hl+'"/><stop offset="1" stop-color="'+hc+'"/></linearGradient>'+
+    '<linearGradient id="'+id+'i" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+shade(ec,-.4)+'"/><stop offset=".55" stop-color="'+ec+'"/><stop offset="1" stop-color="'+shade(ec,.5)+'"/></linearGradient>'+
+    '<g id="'+id+'e"><ellipse rx="13.5" ry="15.5" fill="#fff"/><ellipse cy="1" rx="10.6" ry="14" fill="url(#'+id+'i)"/><ellipse cy="1" rx="4.6" ry="7.4" fill="'+shade(ec,-.75)+'"/><ellipse cy="-4" rx="10.6" ry="6" fill="'+shade(ec,-.5)+'" opacity=".35"/><circle cx="-4" cy="-5" r="3.8" fill="#fff"/><circle cx="4.5" cy="6" r="1.9" fill="#fff" opacity=".9"/>'+
+    '<path d="M-15 -4C-12 -14-2 -18 8 -16C13 -15 15 -11 15.5 -5" fill="none" stroke="#2B2230" stroke-width="3.6" stroke-linecap="round"/><path d="M-15 -4L-19 -8" stroke="#2B2230" stroke-width="2.4" stroke-linecap="round"/></g></defs>';
+  var cap='<path d="M130 30C80 30 66 80 72 132C76 150 84 150 86 140L174 140C176 150 184 150 188 132C194 80 180 30 130 30Z" fill="'+hb+'"'+st+'/>';
+  if(c.hair==='long')o+='<path d="M130 18C66 18 44 72 48 128C50 170 40 215 52 266L86 266L88 196L172 196L174 266L208 266C220 215 210 170 212 128C216 72 194 18 130 18Z" fill="'+hb+'"'+st+'/>';
+  else if(c.hair==='pony')o+='<path d="M178 62C236 58 254 132 238 200C232 170 214 152 188 140Z" fill="'+hb+'"'+st+'/>'+cap+'<circle cx="184" cy="68" r="6" fill="#F0B14A"/>';
+  else o+=cap;
+  o+=outfitSVG(c.out);
+  o+='<path d="M113 188V248C113 258 147 258 147 248V188Z" fill="'+sk+'"/><path d="M113 200C122 216 138 216 147 200V188H113Z" fill="'+sd+'" opacity=".85"/>';
+  o+='<path d="M84 112C84 74 104 56 130 56C156 56 176 74 176 112C176 150 160 192 130 198C100 192 84 150 84 112Z" fill="'+sk+'"/>';
+  var bl=mixc(sk,'#F2706A',.45);
+  o+='<ellipse cx="100" cy="158" rx="11" ry="6" fill="'+bl+'" opacity=".5"/><ellipse cx="160" cy="158" rx="11" ry="6" fill="'+bl+'" opacity=".5"/>';
+  o+='<g fill="none" stroke="'+shade(hc,-.3)+'" stroke-width="2.8" stroke-linecap="round"><path d="M90 112Q103 104 118 109"/><path d="M142 109Q157 104 170 112"/></g>';
+  o+='<use href="#'+id+'e" x="104" y="134"/><use href="#'+id+'e" transform="translate(156 134) scale(-1 1)"/>';
+  o+='<path d="M130 158Q127 163 131 164" fill="none" stroke="'+shade(sk,-.22)+'" stroke-width="1.6" stroke-linecap="round"/>';
+  o+='<path d="M118 173Q130 183 142 173" fill="none" stroke="'+mixc(sk,'#9C3E3E',.7)+'" stroke-width="2.6" stroke-linecap="round"/>';
+  var bangs='M78 136C66 84 90 38 130 38C170 38 194 84 182 136C180 116 176 102 168 92C164 100 154 104 144 102C138 100 130 94 122 86C118 94 108 100 98 102C92 106 86 118 78 136Z';
+  var strands='<path d="M112 50C106 64 104 80 100 96M148 50C154 62 158 74 164 90" stroke="'+shade(hc,-.14)+'" stroke-width="1.2" fill="none" opacity=".7" stroke-linecap="round"/>';
+  if(c.hair==='long')o+='<path d="'+bangs+'" fill="'+H+'"'+st+'/>'+strands+'<path d="M85 118C77 152 75 196 83 238C95 210 101 174 99 130Z" fill="'+H+'"'+st+'/><path d="M175 118C183 152 185 196 177 238C165 210 159 174 161 130Z" fill="'+H+'"'+st+'/>';
+  else if(c.hair==='pony')o+='<path d="'+bangs+'" fill="'+H+'"'+st+'/>'+strands+'<path d="M85 118C80 140 80 158 84 172C92 158 96 140 98 126Z" fill="'+H+'"'+st+'/><path d="M175 118C180 140 180 158 176 172C168 158 164 140 162 126Z" fill="'+H+'"'+st+'/>';
+  else if(c.hair==='spiky')o+='<path d="M80 128L68 82L90 88L86 52L110 70L118 34L134 62L148 28L158 66L178 50L174 86L194 76L180 128C176 112 170 100 162 94C154 104 142 100 132 90C126 100 114 104 104 100C96 106 86 116 80 128Z" fill="'+H+'"'+st+'/>';
+  else o+='<path d="M80 130C70 82 92 40 130 38C168 40 190 82 180 130C176 114 170 102 162 96C154 106 142 102 132 92C126 102 114 106 104 102C96 108 86 118 80 130Z" fill="'+H+'"'+st+'/>'+strands;
+  if(c.acc==='glasses')o+='<g fill="rgba(255,255,255,.1)" stroke="#2B2230" stroke-width="2.4"><circle cx="104" cy="134" r="19"/><circle cx="156" cy="134" r="19"/></g><path d="M123 132Q130 127 137 132M85 130L79 126M175 130L181 126" stroke="#2B2230" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+  if(c.acc==='band')o+='<path d="M80 90C102 80 158 80 180 90L181 101C158 91 102 91 79 101Z" fill="#E2604F"/><path d="M80 95C102 85 158 85 180 95" stroke="#fff" stroke-width="1.6" fill="none" opacity=".8"/>';
+  if(c.acc==='hat')o+='<ellipse cx="130" cy="78" rx="84" ry="15" fill="#A56B3C" stroke="#6E4524" stroke-width="1.2"/><path d="M88 76C86 38 108 22 130 22C152 22 174 38 172 76Z" fill="#8A5A34" stroke="#6E4524" stroke-width="1.2" stroke-linejoin="round"/><path d="M88 66H172V77H88Z" fill="#3B2A1B"/><rect x="118" y="64" width="24" height="14" rx="2" fill="#F0B14A"/>';
+  return o+'</svg>';
+}
+function defAv(){return {hair:'short',hc:'#7A4B2A',skin:'#F2CDB8',eye:'#7A4B2A',out:'guild',acc:'none'}}
+
+var D=null;
+function chips(k,list){return '<div class="opts">'+list.map(function(o){return '<button class="chip" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="false">'+o[1]+'</button>'}).join('')+'</div>'}
+function sws(k,list){return '<div class="swatches">'+list.map(function(o){return '<button class="sw-btn" data-k="'+k+'" data-v="'+o[1]+'" style="--sc:'+o[1]+'" aria-label="'+o[0]+'" aria-pressed="false"></button>'}).join('')+'</div>'}
+function grp(t,b){return '<div class="opt"><span class="label">'+t+'</span>'+b+'</div>'}
+function paintCust(){
+  $('#custPrev').innerHTML='<div class="hero-frame">'+avatar(D)+'</div>';
+  $$('#custOpts [data-k]').forEach(function(b){b.setAttribute('aria-pressed',String(D[b.getAttribute('data-k')]===b.getAttribute('data-v')))});
+}
+function openCust(){
+  D=JSON.parse(JSON.stringify(S.avatar));
+  $('#custOpts').innerHTML=grp('Gaya rambut',chips('hair',AV_HAIR))+grp('Warna rambut',sws('hc',AV_HC))+grp('Warna kulit',sws('skin',AV_SKIN))+grp('Warna mata',sws('eye',AV_EYE))+grp('Pakaian',chips('out',AV_OUT))+grp('Aksesori',chips('acc',AV_ACC));
+  go('avatar');paintCust();
+}
+$('#custOpts').addEventListener('click',function(e){var b=e.target.closest('[data-k]');if(!b)return;D[b.getAttribute('data-k')]=b.getAttribute('data-v');paintCust()});
+function pick(l){return l[Math.floor(Math.random()*l.length)]}
+$('#avBack').innerHTML=ic('back',20);$('#avRand').innerHTML=ic('dice',20);
+$('#avRand').addEventListener('click',function(){D={hair:pick(AV_HAIR)[0],hc:pick(AV_HC)[1],skin:pick(AV_SKIN)[1],eye:pick(AV_EYE)[1],out:pick(AV_OUT)[0],acc:pick(AV_ACC)[0]};paintCust()});
+$('#avBack').addEventListener('click',function(){go('profile')});
+$('#avCancel').addEventListener('click',function(){go('profile')});
+$('#avSave').addEventListener('click',function(){S.avatar=D;go('profile');toast('Avatar disimpan.')});
+
+/* ---------- identity ---------- */
+var tmpPhoto=null,OWN_NO='GP-BDG-000127';
+function safeImg(u){return typeof u==='string'&&/^data:image\//.test(u)}
+function paintIdPhoto(){$('#idPhotoPrev').innerHTML=safeImg(tmpPhoto)?'<img src="'+tmpPhoto+'" alt="Foto profil">':ic('user',40)}
+function validId(){$('#idGo').disabled=!($('#idFull').value.trim().length>=3&&$('#idNik').value.length===16&&$('#idCity').value.trim().length>=2)}
+function openId(){
+  var i=S.ident||{};$('#idFull').value=i.full||'';$('#idNik').value='';$('#idCity').value=i.city||'';
+  tmpPhoto=S.photo;paintIdPhoto();validId();openSheet('#sh-id');
+}
+$('#idPick').innerHTML=ic('camera',15)+' Pilih foto';
+$('#idPick').addEventListener('click',function(){$('#idFile').click()});
+$('#idFile').addEventListener('change',function(){
+  var f=this.files&&this.files[0];if(!f)return;
+  if(f.size>6*1024*1024){toast('Foto terlalu besar. Pilih yang di bawah 6 MB.');return}
+  var r=new FileReader();r.onload=function(){tmpPhoto=r.result;paintIdPhoto()};r.readAsDataURL(f);
+});
+['#idFull','#idCity'].forEach(function(s){$(s).addEventListener('input',validId)});
+$('#idNik').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,16);validId()});
+$('#idCancel').addEventListener('click',closeSheets);
+$('#idGo').addEventListener('click',function(){
+  var nik=$('#idNik').value;if($('#idGo').disabled)return;
+  S.ident={full:$('#idFull').value.trim(),last4:nik.slice(-4),city:$('#idCity').value.trim(),st:'wait'};
+  S.photo=tmpPhoto;closeSheets();renderProfile();toast('Identitas tersimpan. Menunggu verifikasi staff guild.');
+});
+
+/* ---------- profile ---------- */
+function profData(){
+  if(S.sample)return {own:false,name:ARKA.name,avatar:ARKA_AV,rank:ARKA.rank,exp:ARKA.exp,no:'GP-BDG-004281',photo:null,ident:{full:'Arka Pratama Wijaya',last4:'4417',city:'Bandung',st:'ok'},general:ARKA.general,special:ARKA.special,good:ARKA.good,bad:ARKA.bad};
+  return {own:true,name:S.name,avatar:S.avatar,rank:'F',exp:0,no:OWN_NO,photo:S.photo,ident:S.ident,general:null,special:[],good:[],bad:[]};
+}
+function hero(p,vw){
+  var rg=RANK_RANGE[p.rank],nx=RANKS[RANKS.indexOf(p.rank)+1],pct=Math.round((p.exp-rg[0])/(rg[1]-rg[0])*100);
+  return '<div class="hero"><div class="hero-frame">'+avatar(p.avatar)+'</div>'+
+    (vw==='me'?'<button class="pill-btn" id="pfAv">'+ic('pencil',15)+' Ubah avatar</button>':'')+
+    '<h2>'+esc(p.name)+'</h2><div class="rk">'+seal(p.rank,24)+'<span>Rank '+p.rank+' · '+RANK_NAME[p.rank]+'</span></div>'+
+    '<div class="xp"><div class="xp-row"><span><b class="num">'+p.exp.toLocaleString('id-ID')+'</b> EXP</span><span class="num">'+(nx?rg[1].toLocaleString('id-ID')+' untuk Rank '+nx:'Rank tertinggi')+'</span></div><div class="bar"><i style="width:'+Math.max(pct,p.exp?3:0)+'%"></i></div></div></div>';
+}
+function idcard(p,vw){
+  if(vw==='other')return '<div class="idcard cut locked"><div class="hd"><span>Kartu Petualang</span><span class="no">Privat</span></div>'+
+    '<div class="idc-main"><div class="photo">'+ic('lock',28)+'</div><div><div class="sk" style="width:82%"></div><div class="sk" style="width:56%;margin-top:11px"></div></div></div>'+
+    '<div class="idnote">'+ic('eyeoff')+'<span>Data pribadi disembunyikan. Hanya pemilik dan pemberi quest yang pekerjaannya diambil petualang ini yang bisa melihat kartu ini.</span></div></div>';
+  var i=p.ident,stt={ok:['ok','Terverifikasi'],wait:['wait','Menunggu verifikasi'],none:['none','Belum dilengkapi']}[i?i.st:'none'];
+  var h='<div class="idcard cut"><div class="hd"><span>Kartu Petualang</span><span class="no">'+esc(p.no)+'</span></div>'+
+    '<div class="idc-main"><div class="photo">'+(safeImg(p.photo)?'<img src="'+p.photo+'" alt="Foto profil">':ic('user',44))+'</div>'+
+    '<div><b class="nm">'+esc(p.name)+'</b><div class="rk2">'+seal(p.rank,22)+'<span>Rank '+p.rank+' · '+RANK_NAME[p.rank]+'</span></div></div></div>'+
+    '<div class="priv">'+ic('lock')+'Identitas asli</div>'+
+    '<div class="id-rows"><div><span>Nama lengkap</span><b>'+(i?esc(i.full):'—')+'</b></div><div><span>Nomor identitas</span><b class="num">'+(i?'•••• •••• •••• '+esc(i.last4):'—')+'</b></div><div><span>Kota domisili</span><b>'+(i?esc(i.city):'—')+'</b></div><div><span>Status</span><span class="vchip '+stt[0]+'">'+stt[1]+'</span></div></div>';
+  if(vw==='me')h+='<button class="btn ghost" data-act="id">'+(i?'Ubah identitas':'Lengkapi identitas')+'</button>';
+  h+='<div class="idnote">'+ic('eye')+'<span>'+(vw==='me'?'Hanya kamu dan pemberi quest yang pekerjaannya kamu ambil yang bisa melihat kartu ini. Pengguna lain tidak.':'Kamu bisa melihat kartu ini karena quest-mu diambil petualang ini. Jangan bagikan datanya ke pihak lain.')+'</span></div></div>';
+  return h;
+}
+function stat(n,v,off){return '<div class="stat'+(off?' off':'')+'"><span>'+n+'</span><div class="bar"><i style="width:'+(off?0:v)+'%"></i></div><b class="num">'+(off?'—':v)+'</b></div>'}
+function renderProfile(){
+  var b=$('#profileBody');
+  var h='<h1 class="scr-title">Profil</h1><div class="seg"><button data-sm="0" aria-pressed="'+(!S.sample)+'">Profilku</button><button data-sm="1" aria-pressed="'+S.sample+'">Contoh: Arka (Rank C)</button></div>';
+  var tiny='<div class="tiny"><button class="btn ghost" id="pfReset">Mulai ulang prototipe</button><small>Prototipe klik · semua data hanya contoh</small></div>';
+  if(!S.sample&&!S.registered){
+    h+='<div class="hero"><div class="hero-frame">'+avatar(S.avatar)+'</div><h2>Warga Biasa</h2><div class="rk"><span>Belum terdaftar sebagai petualang</span></div></div>'+
+       '<div class="ghost-note" style="margin-top:20px">Daftar sebagai petualang untuk mulai mengumpulkan EXP, mengubah avatar, dan mengambil quest. Kamu boleh memakai nama samaran di Rank F.</div>'+
+       '<div style="margin-top:16px"><button class="btn" id="pfReg">Daftar sebagai Petualang</button></div>'+tiny;
+    b.innerHTML=h;return;
+  }
+  var p=profData(),vw=p.own?S.viewer:(S.viewer==='me'?'other':S.viewer);
+  var opts=p.own?[['me','Aku'],['req','Pemberi quest'],['other','Orang lain']]:[['req','Pemberi quest'],['other','Orang lain']];
+  h+='<div class="vsel"><span class="label">Dilihat oleh</span><div class="seg" style="margin-top:8px">'+opts.map(function(o){return '<button data-vw="'+o[0]+'" aria-pressed="'+(vw===o[0])+'">'+o[1]+'</button>'}).join('')+'</div></div>';
+  if(vw==='req')h+='<div class="vbanner req">'+ic('eye')+'<span>Tampilan untuk pemberi quest yang pekerjaannya diambil '+esc(p.name)+'. Kartu Petualang ikut terlihat.</span></div>';
+  if(vw==='other')h+='<div class="vbanner other">'+ic('eyeoff')+'<span>Tampilan untuk pengguna lain. Hanya avatar, stat, dan achievement yang terlihat. Data pribadi disembunyikan.</span></div>';
+  h+=hero(p,vw)+idcard(p,vw);
+  h+='<div class="h-sec"><i></i>Stat umum</div>';
+  if(p.general)h+=p.general.map(function(s){return stat(s[0],s[1],false)}).join('');
+  else h+=['Ketelitian','Komunikasi','Pemecahan masalah','Kedisiplinan'].map(function(n){return stat(n,null,true)}).join('')+'<p class="label" style="text-transform:none;letter-spacing:.02em;font-weight:500;font-size:12px;line-height:1.5">Stat umum terisi setelah quest pertama selesai.</p>';
+  h+='<div class="h-sec"><i></i>Stat khusus</div>';
+  if(p.special.length)h+=p.special.map(function(s){return '<div class="skill"><div class="hd"><span>'+s[0]+'</span><span class="st-chip '+s[2]+'">'+s[3]+'</span></div><div class="bar jade"><i style="width:'+s[1]+'%"></i></div><div class="label num" style="margin-top:7px">'+s[1]+' / 100</div></div>'}).join('')+
+    '<div class="skill" style="opacity:.6"><div class="hd"><span>Pertukangan</span><span class="st-chip">Belum terbuka</span></div><div class="bar"><i style="width:0"></i></div></div>';
+  else h+='<div class="ghost-note">Belum ada. Ajukan portofolio atau sertifikat, atau ikut ujian guild untuk membuka stat seperti Pemrograman atau Desain Grafis.</div>';
+  h+='<div class="h-sec"><i></i>Achievement</div>';
+  h+=p.good.length?'<div class="badges" style="margin-top:0">'+p.good.map(function(g){return '<span class="badge good">'+ic('star')+g+'</span>'}).join('')+'</div>':'<div class="ghost-note">Belum ada. Selesaikan quest pertamamu.</div>';
+  if(p.bad.length)h+='<div class="h-sec"><i></i>Anti-Achievement</div><div class="badges" style="margin-top:0">'+p.bad.map(function(g){return '<span class="badge bad">'+ic('warn')+g[0]+'<small>· '+g[1]+'</small></span>'}).join('')+'</div>';
+  if(S.sample)h+='<p class="label" style="margin-top:22px;line-height:1.6;letter-spacing:.02em;text-transform:none;font-weight:500;font-size:12px">Contoh profil petualang berpengalaman. Angka dan nama hanya ilustrasi.</p>';
+  b.innerHTML=h+tiny;
+}
+$('#profileBody').addEventListener('click',function(e){
+  var t;
+  if((t=e.target.closest('[data-sm]'))){S.sample=t.getAttribute('data-sm')==='1';S.viewer=S.sample?'other':'me';renderProfile();return}
+  if((t=e.target.closest('[data-vw]'))){S.viewer=t.getAttribute('data-vw');renderProfile();return}
+  if(e.target.closest('#pfReg')){openReg(null);return}
+  if(e.target.closest('#pfAv')){openCust();return}
+  if(e.target.closest('[data-act="id"]')){openId();return}
+  if(e.target.closest('#pfReset')){reset(false)}
+});
+
+/* ---------- gender + reset ---------- */
+function setG(g){terra.setAttribute('data-g',g);$('#g-f').setAttribute('aria-pressed',g==='f');$('#g-m').setAttribute('aria-pressed',g==='m')}
+$('#g-f').addEventListener('click',function(){setG('f')});
+$('#g-m').addEventListener('click',function(){setG('m')});
+
+function reset(old){
+  S.registered=!!old;S.name=old?'Elang Biru':'';S.taken=[];S.avatar=defAv();S.photo=null;S.ident=null;S.viewer='me';S.tab='local';S.cat='Semua';S.onlyOk=false;S.sample=false;S.pending=null;
+  $('#done').classList.remove('on');closeSheets();
+  S.screen='home';SCREENS.forEach(function(s){$('#s-'+s).hidden=s!=='home'});
+  $('#dock').classList.add('hide');runIntro();
+}
+$('#b-reset').addEventListener('click',function(){reset(false)});
+$('#b-old').addEventListener('click',function(){reset(true);endIntro()});
+
+/* ---------- boot ---------- */
+runIntro();
+})();
+</script>

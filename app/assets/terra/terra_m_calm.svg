@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="terra" viewBox="0 0 260 320" width="260" height="320">
+              <defs>
+                <linearGradient id="tIris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B86A18"/><stop offset=".55" stop-color="#F0A93B"/><stop offset="1" stop-color="#FFDB8E"/></linearGradient>
+                <linearGradient id="tHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3F8FA"/><stop offset="1" stop-color="#C3D4DB"/></linearGradient>
+                <linearGradient id="tCoat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26766F"/><stop offset="1" stop-color="#143F45"/></linearGradient>
+                <radialGradient id="tHalo" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#F0B14A" stop-opacity=".5"/><stop offset="1" stop-color="#F0B14A" stop-opacity="0"/></radialGradient>
+                <g id="eyeO">
+                  <ellipse rx="13.5" ry="15.5" fill="#fff"/>
+                  <ellipse cy="1" rx="10.6" ry="14" fill="url(#tIris)"/>
+                  <ellipse cy="1" rx="4.6" ry="7.4" fill="#4A2608"/>
+                  <ellipse cy="-4" rx="10.6" ry="6" fill="#7A3F12" opacity=".35"/>
+                  <circle cx="-4" cy="-5" r="3.8" fill="#fff"/>
+                  <circle cx="4.5" cy="6" r="1.9" fill="#fff" opacity=".9"/>
+                  <path d="M-15 -4C-12 -14-2 -18 8 -16C13 -15 15 -11 15.5 -5" fill="none" stroke="#2B2230" stroke-width="3.6" stroke-linecap="round"/>
+                  <path d="M-15 -4L-19 -8" stroke="#2B2230" stroke-width="2.4" stroke-linecap="round"/>
+                </g>
+                <g id="eyeH">
+                  <path d="M-13 3Q0 -13 13 3" fill="none" stroke="#2B2230" stroke-width="3.8" stroke-linecap="round"/>
+                  <path d="M-13 3L-17 0" stroke="#2B2230" stroke-width="2.4" stroke-linecap="round"/>
+                </g>
+              </defs>
+              <ellipse cx="130" cy="140" rx="150" ry="170" fill="url(#tHalo)"/>
+              <g>
+                <!-- back hair -->
+                
+                <g><path d="M130 30C80 30 66 80 72 132C76 150 84 150 86 140L174 140C176 150 184 150 188 132C194 80 180 30 130 30Z" fill="#B3C7CF" stroke="#9FB4BD" stroke-width=".8"/></g>
+                <!-- body F -->
+                
+                <!-- body M -->
+                <g>
+                  <path d="M2 320V300C2 268 46 252 92 244L168 244C214 252 258 268 258 300V320Z" fill="url(#tCoat)"/>
+                  <path d="M104 242L130 290L156 242Z" fill="#F4F7F8"/>
+                  <path d="M94 240L130 300L100 318L52 266Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M166 240L130 300L160 318L208 266Z" fill="#1A5058" stroke="#F0B14A" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M118 244L130 258L142 244L138 292L130 298L122 292Z" fill="#E2604F"/><circle cx="130" cy="272" r="3.2" fill="#F0B14A"/>
+                  <path d="M26 280L72 262M234 280L188 262" stroke="#F0B14A" stroke-width="5" stroke-linecap="round"/>
+                  <g transform="translate(194 296)"><circle r="10" fill="#F0B14A"/><circle r="7" fill="#143F45"/><path d="M0-5 1.4-1.4 5 0 1.4 1.4 0 5-1.4 1.4-5 0-1.4-1.4Z" fill="#F0B14A"/></g>
+                </g>
+                <!-- neck -->
+                <path d="M113 188V248C113 258 147 258 147 248V188Z" fill="#F2CDB8"/>
+                <path d="M113 200C122 216 138 216 147 200V188H113Z" fill="#D9A58B" opacity=".8"/>
+                <!-- ears (M) -->
+                <g><ellipse cx="82" cy="130" rx="6.5" ry="11" fill="#F1CFBA"/><ellipse cx="178" cy="130" rx="6.5" ry="11" fill="#F1CFBA"/></g>
+                <!-- face -->
+                
+                <path d="M82 112C82 74 104 56 130 56C156 56 178 74 178 112C178 146 168 184 146 196L114 196C92 184 82 146 82 112Z" fill="#F5D6C2"/>
+                <ellipse cx="100" cy="158" rx="11" ry="6" fill="#F28F86" opacity=".42"/>
+                <ellipse cx="160" cy="158" rx="11" ry="6" fill="#F28F86" opacity=".42"/>
+                <!-- brows -->
+                <g fill="none" stroke="#8FA6B1" stroke-width="2.8" stroke-linecap="round">
+                  <path d="M90 112Q103 104 118 109"/><path d="M142 109Q157 104 170 112"/>
+                </g>
+                <!-- eyes -->
+                <g>
+                  <g><use href="#eyeO" x="104" y="134" xlink:href="#eyeO"/></g>
+                  <g><use href="#eyeO" transform="translate(156 134) scale(-1 1)" xlink:href="#eyeO"/></g>
+                </g>
+                
+                <path d="M130 158Q127 163 131 164" fill="none" stroke="#D9A58B" stroke-width="1.6" stroke-linecap="round"/>
+                <!-- mouths -->
+                
+                
+                <path d="M122 175Q130 179 138 175" fill="none" stroke="#B5574F" stroke-width="2.6" stroke-linecap="round"/>
+                
+                <!-- front hair F -->
+                
+                <!-- front hair M -->
+                <g>
+                  <path d="M104 46L112 28L124 42L136 24L146 42L158 30L160 48Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8" stroke-linejoin="round"/>
+                  <path d="M80 130C70 82 92 40 130 38C168 40 190 82 180 130C176 114 170 102 162 96C154 106 142 102 132 92C126 102 114 106 104 102C96 108 86 118 80 130Z" fill="url(#tHair)" stroke="#9FB4BD" stroke-width=".8"/>
+                  <path d="M112 50C106 64 104 80 100 96M148 50C154 62 158 74 164 90" stroke="#A9BEC7" stroke-width="1.2" fill="none" opacity=".7" stroke-linecap="round"/>
+                </g>
+              </g>
+            </svg>
